@@ -1,6 +1,6 @@
 # GitHub Action Workflow enforcing our code style.
 
-name: Run Tests
+name: Run Pre-Commit & Tests
 
 # Trigger the workflow on both push (to the main repository)
 # and pull requests (against the main repository, but from any repo).
@@ -32,7 +32,7 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Run pre-commit hooks.
-        uses: ./actions/lint
+        uses: pre-commit/action@v3.0.0
 
       # This step caches our Python dependencies. To make sure we
       # only restore a cache when the dependencies, the python version and
