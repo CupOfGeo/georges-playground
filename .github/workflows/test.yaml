@@ -22,14 +22,17 @@ jobs:
     steps:
       # Checks out the repository in the current folder.
       - name: Checks out repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       # Set up the right version of Python
       - name: Set up Python ${{ env.PYTHON_VERSION }}
         id: python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v3
         with:
           python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Run pre-commit hooks.
+        uses: ./actions/lint
 
       # This step caches our Python dependencies. To make sure we
       # only restore a cache when the dependencies, the python version and
@@ -37,7 +40,7 @@ jobs:
       # that is a composite of those states.
       # Only when the context is exactly the same, we will restore the cache.
       - name: Restore pip cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ env.PIP_CACHE_DIR }}
           key: "python-pip-${{ runner.os }}-\
