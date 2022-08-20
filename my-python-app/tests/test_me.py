@@ -1,4 +1,4 @@
-from ..test_functions import add_numbers
+from my_functions import add_numbers
 
 
 def test_hello_france() -> None:

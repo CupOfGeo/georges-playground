@@ -16,3 +16,6 @@ def add_numbers(num1: int, num2: int) -> int:
     :return: the sum of num1 and num 2
     """
     return num1 + num2
+
+
+hello_france()
