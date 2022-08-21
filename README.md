@@ -5,4 +5,5 @@ run tests with `pytest my_python_app/tests`
 
 #### Questions I'm having right now
 
-- I have two files in my workflow right now lint and tests. Is this correct
+- Not sure what to do with workflow/actions/lint just added pre-commit hooks to test workflow.
+I know I saw Nerash had an actual pipeline curious what was going on there. I guess its multiple jobs in the work flow.
