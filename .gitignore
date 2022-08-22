@@ -1,6 +1,7 @@
 .idea
 .terraform*
 terraform_stuff/terraform.*
+secret
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
