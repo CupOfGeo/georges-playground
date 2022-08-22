@@ -1,9 +1,25 @@
+#provider "google" {
+#  credentials = "${file("../secret/terraform_service_account.json")}"
+#  project     = "playground-geo"
+#  region      = "us-central1"
+#  zone        = "us-central1-c"
+#}
+#
 terraform {
-    # Uncomment this to get it running in the CD pipeline.
-    # backend "azurerm" {
-    #     resource_group_name  = "<your-resource-group>"
-    #     storage_account_name = "<your-storage-acount>"
-    #     container_name       = "terraform"
-    #     key                  = "terraform.tfstate"
-    # }
+ backend "gcs" {
+   bucket  = "terraform-state-geo"
+   prefix  = "terraform/state"
+ }
+}
+
+
+resource "google_storage_bucket" "tf-bucket" {
+  project       = var.gcp_project
+  name          = var.tf-bucket-name
+  location      = var.gcp_region
+  force_destroy = true
+  storage_class = var.storage-class
+  versioning {
+    enabled = true
+  }
 }
