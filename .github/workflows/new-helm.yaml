@@ -1,21 +1,24 @@
 name: "Helm"
 
-on: push
+on: pull_request
 
 jobs:
   create-helm-folder:
     # only does this on initial push to branch
-    if: github.run_number == 1
+#    if: github.run_number == 1
 
     runs-on: ubuntu-latest
     steps:
       - name: Checks out repository
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
 
       - name: Get branch name
         shell: bash
         id: vars
-        run: echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
+        run: echo ::set-output name=short_ref::${GITHUB_HEAD_REF}
+
 
       - name: Create branch folder
         run: cp -r party-ingest-core/ ${{ steps.vars.outputs.short_ref }}
