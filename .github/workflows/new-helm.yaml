@@ -32,7 +32,7 @@ jobs:
         run: |
           pwd
           echo "wtf"
-          ls
+          cd ..
           cp -r party-ingest-core/ ${{ steps.vars.outputs.short_ref }}
 
       - name: Show GitHub context
