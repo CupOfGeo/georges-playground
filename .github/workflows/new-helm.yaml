@@ -4,7 +4,7 @@ on: [push]
 
 
 jobs:
-  create-helm-folder:
+  checkout-repo:
     runs-on: ubuntu-latest
 
     steps:
@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v3
 
 
-  greeting_job:
+  create-helm-folder:
     runs-on: ubuntu-latest
     steps:
       - name: Set output
@@ -21,20 +21,18 @@ jobs:
         id: vars
         run: echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
 
-      - name: Check output
-        run: echo ${{ steps.vars.outputs.short_ref }}
-
-  report:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
       - name: Create report file
-        run: date +%s > report.txt
+        run: cp -r  ${{ steps.vars.outputs.short_ref }}
+
+      - name: Show GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT" ```
 
       - name: Commit report
         run: |
-            git add report.txt
-            git config --global user.name 'Your Name'
-            git config --global user.email 'your-username@users.noreply.github.com'
-            git commit -am "Automated report"
-            git push
+          git add report.txt
+          git config --global user.name 'Your Name'
+          git config --global user.email 'your-username@users.noreply.github.com'
+          git commit -am "Automated report"
+          git push
