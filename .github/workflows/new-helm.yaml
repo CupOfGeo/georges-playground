@@ -25,5 +25,5 @@ jobs:
       - name: Get branch name
         run: echo 'The branch name is' $BRANCH_NAME
 
-       - name: Check output
+      - name: Check output
         run: echo ${{ steps.extracted_branch.outputs.short_ref }}
