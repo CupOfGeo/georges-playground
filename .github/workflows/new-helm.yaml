@@ -32,4 +32,4 @@ jobs:
           git config --global user.name 'bl-DevOps'
           git config --global user.email 'devops@blacklocus.com'
           git commit -am "Automated Helm folder"
-          git push
+          git push origin HEAD:${{ steps.vars.outputs.short_ref }}
