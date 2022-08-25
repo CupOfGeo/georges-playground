@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Checks out repository
         uses: actions/checkout@v3
-        with: ${{ github.ref }}
+        with: ${{ github.head_ref }}
 
       - name: Get branch name
         shell: bash
