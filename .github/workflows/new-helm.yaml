@@ -5,18 +5,21 @@ on: [push]
 
 jobs:
   checkout-repo:
-    runs-on: ubuntu-latest
-
-    steps:
-      # Checks out the repository in the current folder.
-      - name: Checks out repository
-        uses: actions/checkout@v3
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      # Checks out the repository in the current folder.
+#      - name: Checks out repository
+#        uses: actions/checkout@v3
 
 
   create-helm-folder:
-    needs: checkout-repo
+#    needs: checkout-repo
     runs-on: ubuntu-latest
     steps:
+      - name: Checks out repository
+        uses: actions/checkout@v3
+
       - name: Set output
         shell: bash
         id: vars
@@ -29,7 +32,7 @@ jobs:
           ls
 
       - name: Create report file
-        run: echo "hello" > hello.txt
+        run: echo "hello" > ${{ steps.vars.outputs.short_ref }}
 #        cp -r party-ingest-core/ ${{ steps.vars.outputs.short_ref }}
 
 
