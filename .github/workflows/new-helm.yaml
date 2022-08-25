@@ -28,6 +28,7 @@ jobs:
 
       - name: Commit report
         run: |
+          git pull
           git add ${{ steps.vars.outputs.short_ref }}
           git config --global user.name 'bl-DevOps'
           git config --global user.email 'devops@blacklocus.com'
