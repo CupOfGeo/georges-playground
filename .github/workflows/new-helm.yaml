@@ -1,27 +1,34 @@
 name: "Helm"
 
-on: [push]
-
+on: push
 
 jobs:
   create-helm-folder:
-    runs-on: ubuntu-latest
+    # only does this on initial push to branch
+    if: github.run_number == 1
 
+    runs-on: ubuntu-latest
     steps:
-      # Checks out the repository in the current folder.
       - name: Checks out repository
         uses: actions/checkout@v3
 
-
-  greeting_job:
-    runs-on: ubuntu-latest
-
-    steps:
-
-      - name: Set output
+      - name: Get branch name
         shell: bash
         id: vars
         run: echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
 
-      - name: Check output
-        run: echo ${{ steps.vars.outputs.short_ref }}
+      - name: Create branch folder
+        run: cp -r party-ingest-core/ ${{ steps.vars.outputs.short_ref }}
+
+      - name: Show GitHub context for debugging
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+
+      - name: Commit report
+        run: |
+          git add ${{ steps.vars.outputs.short_ref }}
+          git config --global user.name 'bl-DevOps'
+          git config --global user.email 'devops@blacklocus.com'
+          git commit -am "Automated Helm folder"
+          git push
