@@ -15,7 +15,7 @@ jobs:
       - name: Get branch name
         shell: bash
         id: vars
-        run: echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
+        run: echo "::set-env name=BRANCH_NAME::$(echo ${GITHUB_HEAD_REF})"
 
       - name: Create branch folder
         run: cp -r party-ingest-core/ ${{ steps.vars.outputs.short_ref }}
