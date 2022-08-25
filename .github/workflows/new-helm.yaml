@@ -22,7 +22,9 @@ jobs:
         run: echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
 
       - name: Create report file
-        run: cp -r party-ingest-core ${{ steps.vars.outputs.short_ref }}
+        run: |
+            ls
+            cp -r party-ingest-core ${{ steps.vars.outputs.short_ref }}
 
       - name: Show GitHub context
         env:
