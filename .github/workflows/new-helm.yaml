@@ -14,6 +14,7 @@ jobs:
 
 
   create-helm-folder:
+    needs: checkout-repo
     runs-on: ubuntu-latest
     steps:
       - name: Set output
@@ -22,9 +23,9 @@ jobs:
         run: echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
 
       - name: Create report file
-        run: |
-            ls
-            cp -r party-ingest-core/ ${{ steps.vars.outputs.short_ref }}
+
+        run: pwd
+          cp -r party-ingest-core/ ${{ steps.vars.outputs.short_ref }}
 
       - name: Show GitHub context
         env:
