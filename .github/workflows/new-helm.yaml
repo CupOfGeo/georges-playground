@@ -23,7 +23,9 @@ jobs:
         run: echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
 
       - name: show value
-        run: echo ${{ steps.vars.outputs }}
+        run: |
+          echo ${GITHUB_REF} \
+          pwd
 
       - name: Create report file
         run: cp -r party-ingest-core/ ${{ steps.vars.outputs.short_ref }}
