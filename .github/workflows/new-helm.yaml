@@ -4,10 +4,14 @@ on: push
 
 jobs:
   # only does this on initial push to branch
-  deploy:
-    if: github.run_number == 1
+  initial-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checks initial push
+        if: github.run_number == 1
 
   create-helm-folder:
+    needs: initial-push
     runs-on: ubuntu-latest
     steps:
       - name: Checks out repository
