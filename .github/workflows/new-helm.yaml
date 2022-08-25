@@ -24,7 +24,7 @@ jobs:
 
       - name: Create report file
 
-        run: pwd
+        run: echo ${{ steps.vars }}
           cp -r party-ingest-core/ ${{ steps.vars.outputs.short_ref }}
 
       - name: Show GitHub context
@@ -37,5 +37,5 @@ jobs:
           git add report.txt
           git config --global user.name 'Your Name'
           git config --global user.email 'your-username@users.noreply.github.com'
-          git commit -am "Automated report"
+          git commit -am "Automated Helm folder"
           git push
