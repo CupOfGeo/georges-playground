@@ -15,9 +15,7 @@ jobs:
 
   greeting_job:
     runs-on: ubuntu-latest
-
     steps:
-
       - name: Set output
         shell: bash
         id: vars
@@ -25,3 +23,17 @@ jobs:
 
       - name: Check output
         run: echo ${{ steps.vars.outputs.short_ref }}
+
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Create report file
+        run: date +%s > report.txt
+
+      - name: Commit report
+        run: |
+            git config --global user.name 'Your Name'
+            git config --global user.email 'your-username@users.noreply.github.com'
+            git commit -am "Automated report"
+            git push
