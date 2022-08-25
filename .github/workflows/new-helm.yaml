@@ -1,6 +1,6 @@
 name: "Helm"
 
-on: [branch]
+on: [push]
 
 
 jobs:
