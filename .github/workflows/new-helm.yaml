@@ -4,8 +4,6 @@ on: pull_request
 
 jobs:
   create-helm-folder:
-    # only does this on initial push to branch
-#    if: github.run_number == 1
 
     runs-on: ubuntu-latest
     steps:
