@@ -65,6 +65,8 @@ jobs:
       # Checks out the repository in the current folder.
       - name: Checks out repository
         uses: actions/checkout@v3
+
+      - name: Build Tag Push
         run: |
           docker build -t sample-flask-app my-python-app/
           docker tag sample-flask-app gcr.io/playground-geo/sample-flask-app
