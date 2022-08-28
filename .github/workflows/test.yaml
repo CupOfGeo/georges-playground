@@ -1,6 +1,6 @@
 # GitHub Action Workflow enforcing our code style.
 
-name: Run Pre-Commit & Tests
+name: Run Pre-Commit - Tests - Build - Push
 
 # Trigger the workflow on both push (to the main repository)
 # and pull requests (against the main repository, but from any repo).
@@ -58,20 +58,14 @@ jobs:
           # Force pre-commit to do a system install.
           PIP_USER: 0
 
-        # Pipenv setup
-        # - name: Run hooks through our Pipenv environment.
-        #  run: |
-        #    pipenv install --system --dev
-        #    pipenv run python -m pre-commit run --all-files
-        #  env:
-        #    # Force pre-commit to do a system install.
-        #    PIP_USER: 0
-
-        # Poetry setup
-        # - name: Run hooks through our Poetry environment.
-        #  run: |
-        #    poetry install
-        #    poetry run python -m pre-commit run --all-files
-        #  env:
-        #    # Force pre-commit to do a system install.
-        #    PIP_USER: 0
+  build-tag-push:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      # Checks out the repository in the current folder.
+      - name: Checks out repository
+        uses: actions/checkout@v3
+        run: |
+          docker build -t sample-flask-app my-python-app/
+          docker tag sample-flask-app gcr.io/playground-geo/sample-flask-app
+          docker push gcr.io/playground-geo/sample-flask-app
