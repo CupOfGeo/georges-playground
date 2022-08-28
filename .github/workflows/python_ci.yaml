@@ -5,7 +5,7 @@ name: Run Pre-Commit - Tests - Build - Push
 # Trigger the workflow on both push (to the main repository)
 # and pull requests (against the main repository, but from any repo).
 on: [push, pull_request]
-# Brand new concurrency setting! This ensures that not more than one run can be triggered for the same commit.
+# Brand-new concurrency setting! This ensures that not more than one run can be triggered for the same commit.
 # It is useful for pull requests coming from the main repository since both triggers will match.
 concurrency: tests-${{ github.sha }}
 
@@ -52,7 +52,7 @@ jobs:
       # Default Env setup
       - name: Run hooks through our requirement file
         run: |
-          pip install -r dev-requirements.txt
+          pip install -r my-python-app/dev-requirements.txt
           pytest
         env:
           # Force pre-commit to do a system install.
