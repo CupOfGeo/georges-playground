@@ -8,3 +8,12 @@ def test_hello_france() -> None:
     :return:
     """
     assert add_numbers(40, 2) == 42
+
+
+def test_failing() -> None:
+    """
+    Bad test
+
+    :return:
+    """
+    assert add_numbers(2, 2) == 5
