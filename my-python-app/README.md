@@ -1,5 +1,5 @@
 # Run Tests
-`pytest my_python_app/tests`
+`pytest my-python-app/tests`
 
 
 [comment]: <> (# <s> Build, Tag and Push to gcr* </s>)

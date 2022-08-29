@@ -1,6 +1,6 @@
 # GitHub Action Workflow enforcing our code style.
 
-name: Run Pre-Commit - Tests - Build - Push
+name: Run Pre-Commit & Tests
 
 # Trigger the workflow on both push (to the main repository)
 # and pull requests (against the main repository, but from any repo).
@@ -50,7 +50,7 @@ jobs:
       # Uncomment the step that matches your setup.
 
       # Default Env setup
-      - name: Run hooks through our requirement file
+      - name: Run Tests
         run: |
           pip install -r my-python-app/dev-requirements.txt
           pytest
