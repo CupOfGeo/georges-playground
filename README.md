@@ -26,11 +26,10 @@ TODO:
 - If tests pass build in docker image and push to gcr (first need gcr with terraform)
 - Deploy somewhere?
 
-test loaclly with [act](https://github.com/nektos/act)
+test locally with [act](https://github.com/nektos/act)
 
 # Sample python module
-I have a my-python-app module that doesn't do much, but it has tests and docker container. \
-run tests with `pytest my_python_app/tests`
+I have a my-python-app module that doesn't do much, but it has tests and docker container.
 
 # Terraform_stuff
 Read the read me in that folder to get started

@@ -58,16 +58,22 @@ jobs:
           # Force pre-commit to do a system install.
           PIP_USER: 0
 
-  build-tag-push:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      # Checks out the repository in the current folder.
-      - name: Checks out repository
-        uses: actions/checkout@v3
-
-      - name: Build Tag Push
-        run: |
-          docker build -t sample-flask-app my-python-app/
-          docker tag sample-flask-app gcr.io/playground-geo/sample-flask-app
-          docker push gcr.io/playground-geo/sample-flask-app
+#  build-tag-push:
+#    needs: test
+#    runs-on: ubuntu-latest
+#    steps:
+#      # Checks out the repository in the current folder.
+#      - name: Checks out repository
+#        uses: actions/checkout@v3
+#
+#       - name: Google Auth
+#         id: auth
+#         uses: 'google-github-actions/auth@v0'
+#         with:
+#           credentials_json: '${{ secrets.GCP_CREDENTIALS }}''
+#
+#      - name: Build Tag Push
+#        run: |
+#          docker build -t sample-flask-app my-python-app/
+#          docker tag sample-flask-app gcr.io/playground-geo/sample-flask-app
+#          docker push gcr.io/playground-geo/sample-flask-app
