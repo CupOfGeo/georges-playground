@@ -45,14 +45,14 @@ repos:
       - id: tflint
         args:
           - "--module"
-          - "--deep"
           - "--config=.tflint.hcl"
-      - id: terraform-validate
       - id: terraform-fmt
+      - id: terraform-validate
+
 
   - repo: https://github.com/antonbabenko/pre-commit-terraform
     rev: v1.74.1 # Get the latest from: https://github.com/antonbabenko/pre-commit-terraform/releases
     hooks:
 #      - id: terraform_tfsec
       - id: terraform_docs
-      - id: checkov
+#      - id: checkov

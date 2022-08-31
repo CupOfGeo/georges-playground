@@ -28,4 +28,39 @@ TFLint, TFSec, Checkov, Terraform Docs, Terraform Fmt, Terraform Validate \
 The .tflint.hcl file hold configs for TFLint
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+## Requirements
+
+No requirements.
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| <a name="provider_google"></a> [google](#provider\_google) | 4.32.0 |
+
+## Modules
+
+No modules.
+
+## Resources
+
+| Name | Type |
+|------|------|
+| [google_storage_bucket.tf-bucket](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket) | resource |
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_gcp_auth_file"></a> [gcp\_auth\_file](#input\_gcp\_auth\_file) | GCP authentication file | `string` | n/a | yes |
+| <a name="input_gcp_project"></a> [gcp\_project](#input\_gcp\_project) | GCP project name | `string` | n/a | yes |
+| <a name="input_gcp_region"></a> [gcp\_region](#input\_gcp\_region) | GCP region | `string` | n/a | yes |
+| <a name="input_storage-class"></a> [storage-class](#input\_storage-class) | The storage class of the Storage Bucket to create | `string` | n/a | yes |
+| <a name="input_tf-bucket-name"></a> [tf-bucket-name](#input\_tf-bucket-name) | The name of the Google Storage Bucket to create | `string` | n/a | yes |
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| <a name="output_gcp_bucket"></a> [gcp\_bucket](#output\_gcp\_bucket) | n/a |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
