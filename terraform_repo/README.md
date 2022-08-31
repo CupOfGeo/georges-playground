@@ -21,3 +21,11 @@ terraform {
 but
 
 - It's ok the name should be hardcoded  
+
+# Pre Commit Hooks
+https://medium.com/slalom-build/pre-commit-hooks-for-terraform-9356ee6db882 \
+TFLint, TFSec, Checkov, Terraform Docs, Terraform Fmt, Terraform Validate \
+The .tflint.hcl file hold configs for TFLint
+
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

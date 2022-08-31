@@ -42,4 +42,12 @@ gcloud auth configure-docker us-central1-docker.pkg.dev
 
 
 # SECRETS shh
-Added gcp artifact-registry service account json to github secrets
+Added gcp <s>artifact-registry</s> test-service service account json to github secrets
+it has these roles (permissions?)
+
+    Cloud Run
+      roles/run.admin
+      roles/iam.serviceAccountUser     (to act as the Cloud Run runtime service account)
+
+    Artifact Registry
+      roles/artifactregistry.admin     (project or repository level)

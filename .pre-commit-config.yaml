@@ -37,3 +37,22 @@ repos:
           - flake8-annotations~=2.0
           - flake8-docstrings~=1.5
           - flake8-isort~=4.0
+
+# TERRAFORM REPO
+  - repo: https://github.com/gruntwork-io/pre-commit
+    rev: v0.1.17 # Get the latest from: https://github.com/gruntwork-io/pre-commit/releases
+    hooks:
+      - id: tflint
+        args:
+          - "--module"
+          - "--deep"
+          - "--config=.tflint.hcl"
+      - id: terraform-validate
+      - id: terraform-fmt
+
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.74.1 # Get the latest from: https://github.com/antonbabenko/pre-commit-terraform/releases
+    hooks:
+#      - id: terraform_tfsec
+      - id: terraform_docs
+      - id: checkov
