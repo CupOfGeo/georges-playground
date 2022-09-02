@@ -45,10 +45,15 @@
 name: Build and Deploy to Cloud Run
 
 on:
-  workflow_run:
-    workflows: ["Run Pre-Commit - Tests - Build - Push"]
-    types:
-      - completed
+  push:
+    branches:
+      - main
+
+#on:
+#  workflow_run:
+#    workflows: ["Run Pre-Commit - Tests - Build - Push"]
+#    types:
+#      - completed
 
 env:
   PROJECT_ID: 'playground-geo' # TODO: update Google Cloud project id
