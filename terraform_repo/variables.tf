@@ -21,3 +21,7 @@ variable "storage-class" {
   type        = string
   description = "The storage class of the Storage Bucket to create"
 }
+variable "web-image" {
+  type        = string
+  description = "image in GAR"
+}

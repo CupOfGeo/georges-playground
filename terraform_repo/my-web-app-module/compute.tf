@@ -7,8 +7,8 @@ resource "google_compute_instance" "web-server" {
 
   boot_disk {
     initialize_params {
-      #      image = "debian-cloud/debian-11"
-      image = "gcr.io/playground-geo/sample-flask-app"
+            image = "debian-cloud/debian-11"
+#      image = var.web-image
     }
   }
 
