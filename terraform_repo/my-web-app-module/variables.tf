@@ -29,3 +29,8 @@ variable "web-image" {
   type        = string
   description = "image in GAR"
 }
+
+variable "with_database" {
+  type        = bool
+  description = "Create database"
+}
