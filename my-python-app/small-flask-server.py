@@ -13,4 +13,4 @@ def hello_cloud() -> str:
     return "Hello Cloud!"
 
 
-app.run(host="0.0.0.0")
+app.run(host="0.0.0.0", port=8080)
