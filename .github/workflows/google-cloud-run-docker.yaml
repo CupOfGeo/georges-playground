@@ -45,21 +45,18 @@
 name: Build and Deploy to Cloud Run
 
 on:
-  push:
-    branches:
-      - main
-
-#on:
-#  workflow_run:
-#    workflows: ["Run Pre-Commit - Tests - Build - Push"]
-#    types:
-#      - completed
+  workflow_run:
+    workflows: ["Run Pre-Commit & Tests"]
+#    branches: [main]
+    types:
+      - completed
 
 env:
-  PROJECT_ID: 'playground-geo' # TODO: update Google Cloud project id
-  GAR_LOCATION: "us-central1" # TODO: update Artifact Registry location
-  SERVICE: 'test-flask-app-images' # TODO: update Cloud Run service name SHOULD THIS BE REPO?
-  REGION: 'us-central1' # TODO: update Cloud Run service region
+  PROJECT_ID: 'playground-geo'
+  GAR_LOCATION: "us-central1"
+  SERVICE: 'test-flask-app-images'
+  REGION: 'us-central1'
+  REPO: 'test-flask-app-images'
 
 jobs:
   deploy:
