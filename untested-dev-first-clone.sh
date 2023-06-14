@@ -21,4 +21,3 @@ brew install pre-commit gawk coreutils
 
 
 pre-commit install
-pre-commit
