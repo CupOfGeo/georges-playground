@@ -2,7 +2,6 @@ from typing import Awaitable, Callable
 
 from fastapi import FastAPI
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
-
 from src.db.meta import meta
 from src.db.models import load_all_models
 from src.settings import settings

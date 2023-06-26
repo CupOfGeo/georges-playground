@@ -1,9 +1,8 @@
 from fastapi import FastAPI
 from fastapi.responses import UJSONResponse
-
-from src.logging import configure_logging
-from src.api.router import api_router
 from src.api.lifetime import register_shutdown_event, register_startup_event
+from src.api.router import api_router
+from src.logging import configure_logging
 
 
 def get_app() -> FastAPI:

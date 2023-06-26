@@ -9,11 +9,10 @@ from sqlalchemy.ext.asyncio import (
     async_sessionmaker,
     create_async_engine,
 )
-
+from src.api.application import get_app
 from src.db.dependencies import get_db_session
 from src.db.utils import create_database, drop_database
 from src.settings import settings
-from src.api.application import get_app
 
 
 @pytest.fixture(scope="session")

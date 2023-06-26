@@ -12,7 +12,7 @@ This is a fastapi template im building that would be able to do basic crud opera
 
 any and all code goes in the src folder. From there we have api which is the fast api itself. db for database and tests for tests....
 
-## Running with docker-compose 
+## Running with docker-compose
 ```bash
 docker-compose -f docker-compose.yml -f docker-compose.dev.yml --project-directory . up --build
 ```

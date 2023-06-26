@@ -1,5 +1,4 @@
 from fastapi import APIRouter
-
 from src.api.echo.schema import Message
 
 router = APIRouter()

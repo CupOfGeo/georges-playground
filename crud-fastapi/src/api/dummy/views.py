@@ -2,10 +2,9 @@ from typing import List
 
 from fastapi import APIRouter
 from fastapi.param_functions import Depends
-
+from src.api.dummy.schema import DummyModelDTO, DummyModelInputDTO
 from src.db.dao.dummy_dao import DummyDAO
 from src.db.models.dummy_model import DummyModel
-from src.api.dummy.schema import DummyModelDTO, DummyModelInputDTO
 
 router = APIRouter()
 

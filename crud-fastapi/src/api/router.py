@@ -1,5 +1,4 @@
 from fastapi.routing import APIRouter
-
 from src.api import dummy, echo, monitoring
 
 api_router = APIRouter()

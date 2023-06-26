@@ -50,7 +50,7 @@ jobs:
       # Default Env setup
       - name: Run Tests
         run: |
-          pip install -r my-python-app/dev-requirements.txt
+          pip install -r my_python_app/dev-requirements.txt
           pytest
         env:
           # Force pre-commit to do a system install.

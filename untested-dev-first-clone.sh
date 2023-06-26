@@ -3,12 +3,14 @@ python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 
-# docker
+# docker https://www.docker.com/
 brew cask install docker
-# gcloud
+# gcloud https://console.cloud.google.com/
 brew install --cask google-cloud-sdk
-# terraform
+# terraform https://developer.hashicorp.com/terraform
 brew install terraform
+# flyway db-migrations https://flywaydb.org/
+brew install flyway
 
 
 # test github actions locally

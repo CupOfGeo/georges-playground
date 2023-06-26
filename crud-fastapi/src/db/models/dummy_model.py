@@ -1,6 +1,5 @@
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy.sql.sqltypes import String
-
 from src.db.base import Base
 
 
