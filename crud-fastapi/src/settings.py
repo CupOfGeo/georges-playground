@@ -4,6 +4,9 @@ from tempfile import gettempdir
 
 from pydantic import BaseSettings
 from yarl import URL
+from dotenv import load_dotenv
+
+load_dotenv('.env')
 
 TEMP_DIR = Path(gettempdir())
 
@@ -36,6 +39,8 @@ class Settings(BaseSettings):
 
     # Current environment
     environment: str = "dev"
+
+    backend_cors_origins: list = []
 
     log_level: LogLevel = LogLevel.INFO
 

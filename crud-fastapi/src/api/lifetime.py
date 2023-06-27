@@ -2,8 +2,6 @@ from typing import Awaitable, Callable
 
 from fastapi import FastAPI
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
-from src.db.meta import meta
-from src.db.models import load_all_models
 from src.settings import settings
 
 
@@ -22,17 +20,18 @@ def _setup_db(app: FastAPI) -> None:  # pragma: no cover
         engine,
         expire_on_commit=False,
     )
+    print(settings.db_url)
     app.state.db_engine = engine
     app.state.db_session_factory = session_factory
 
 
-async def _create_tables() -> None:  # pragma: no cover
-    """Populates tables in the database."""
-    load_all_models()
-    engine = create_async_engine(str(settings.db_url))
-    async with engine.begin() as connection:
-        await connection.run_sync(meta.create_all)
-    await engine.dispose()
+# async def _create_tables() -> None:  # pragma: no cover
+#     """Populates tables in the database."""
+#     load_all_models()
+#     engine = create_async_engine(str(settings.db_url))
+#     async with engine.begin() as connection:
+#         await connection.run_sync(meta.create_all)
+#     await engine.dispose()
 
 
 def register_startup_event(
@@ -51,8 +50,8 @@ def register_startup_event(
     @app.on_event("startup")
     async def _startup() -> None:  # noqa: WPS430
         _setup_db(app)
-        await _create_tables()
-        pass  # noqa: WPS420
+        # await _create_tables()
+        # pass  # noqa: WPS420
 
     return _startup
 
