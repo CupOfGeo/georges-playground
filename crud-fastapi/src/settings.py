@@ -2,9 +2,9 @@ import enum
 from pathlib import Path
 from tempfile import gettempdir
 
+from dotenv import load_dotenv
 from pydantic import BaseSettings
 from yarl import URL
-from dotenv import load_dotenv
 
 load_dotenv('.env')
 
@@ -47,9 +47,9 @@ class Settings(BaseSettings):
     # Variables for the database
     db_host: str = "localhost"
     db_port: int = 5432
-    db_user: str = "fuck"
-    db_pass: str = "fuck"
-    db_base: str = "fuck"
+    db_user: str = "crud_fastapi_app"
+    db_pass: str = "pass"
+    db_base: str = "crud_fastapi_db"
     db_echo: bool = False
 
     @property

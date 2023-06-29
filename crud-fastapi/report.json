@@ -1,0 +1,58 @@
+{
+  "individualResults": [
+    {
+      "initialSchemaVersion": null,
+      "targetSchemaVersion": null,
+      "schemaName": "",
+      "migrations": [],
+      "migrationsExecuted": 0,
+      "success": true,
+      "flywayVersion": "9.20.0",
+      "database": "crud_fastapi_db",
+      "warnings": [],
+      "timestamp": "2023-06-28T18:18:53.780999",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": null,
+      "targetSchemaVersion": null,
+      "schemaName": "",
+      "migrations": [],
+      "migrationsExecuted": 0,
+      "success": true,
+      "flywayVersion": "9.20.0",
+      "database": "crud_fastapi_db",
+      "warnings": [],
+      "timestamp": "2023-06-28T18:19:17.687812",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": null,
+      "targetSchemaVersion": "0",
+      "schemaName": "",
+      "migrations": [
+        {
+          "category": "Versioned",
+          "version": "0",
+          "description": "dummy",
+          "type": "SQL",
+          "filepath": "/Users/georgemazzeo/Code/georges-playground/crud-fastapi/migrations/V0__dummy.sql",
+          "executionTime": 7
+        }
+      ],
+      "migrationsExecuted": 1,
+      "success": true,
+      "flywayVersion": "9.20.0",
+      "database": "crud_fastapi_db",
+      "warnings": [],
+      "timestamp": "2023-06-28T18:34:58.515149",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
+    }
+  ]
+}

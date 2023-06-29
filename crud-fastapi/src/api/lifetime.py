@@ -20,7 +20,7 @@ def _setup_db(app: FastAPI) -> None:  # pragma: no cover
         engine,
         expire_on_commit=False,
     )
-    print(settings.db_url)
+    print(settings.db_url, settings.db_base)
     app.state.db_engine = engine
     app.state.db_session_factory = session_factory
 
@@ -52,7 +52,7 @@ def register_startup_event(
         _setup_db(app)
         # await _create_tables()
         # pass  # noqa: WPS420
-
+    print("Done")
     return _startup
 
 
