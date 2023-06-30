@@ -24,6 +24,3 @@ async def test_echo(fastapi_app: FastAPI, client: AsyncClient) -> None:
     )
     assert response.status_code == status.HTTP_200_OK
     assert response.json()["message"] == message
-
-
-
