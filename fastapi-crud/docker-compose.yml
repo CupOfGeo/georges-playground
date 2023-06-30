@@ -1,0 +1,49 @@
+version: '3.9'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: prod
+    image: crud-fastapi:latest
+    restart: always
+    env_file:
+    - .env
+    depends_on:
+      db:
+        condition: service_healthy
+    # environment:
+    #   CRUD_FASTAPI_HOST: 0.0.0.0
+    #   CRUD_FASTAPI_DB_HOST: crud-fastapi-db
+    #   CRUD_FASTAPI_DB_PORT: 5432
+    #   CRUD_FASTAPI_DB_USER: george
+    #   CRUD_FASTAPI_DB_PASS: pass
+    #   CRUD_FASTAPI_DB_BASE: crud_fastapi_db
+
+  db:
+    image: postgres:14
+    hostname: crud-fastapi-db
+    ports:
+      # Exposes application port.
+    - "5432:5432"
+    # env_file:
+    # - .env
+    environment:
+      POSTGRES_PASSWORD: pass
+      POSTGRES_USER: crud_fastapi_app
+      POSTGRES_DB: crud_fastapi_db
+    volumes:
+    - crud-fastapi-db-data2:/var/lib/postgresql/data
+    restart: always
+    healthcheck:
+      test: pg_isready -U crud_fastapi_app
+      interval: 2s
+      timeout: 3s
+      retries: 40
+
+
+
+volumes:
+  crud-fastapi-db-data2:
+    name: crud-fastapi-db-data2
