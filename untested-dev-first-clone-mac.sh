@@ -62,19 +62,19 @@ pip install -r requirements.txt
 brew cask install docker
 # gcloud https://console.cloud.google.com/
 brew install --cask google-cloud-sdk
+
+
+## these are technically not needed to run the project but are definitly nice to have for development.
+
 # flyway db-migrations https://flywaydb.org/
 brew install flyway
 
-
-# ngrok just a great dev tool https://ngrok.com/
+# ngrok just a great dev tool <3 https://ngrok.com/
 brew install ngrok
-
 # test github actions locally
 brew install act
-
 # helm for kubernetes template https://helm.sh/
 brew install helm
-
 # terraform https://developer.hashicorp.com/terraform
 brew install terraform
 # terraform stuff
