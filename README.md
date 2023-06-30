@@ -1,35 +1,52 @@
-Hello this is a test repo that I have configured with pre-commit-hooks and GitHub actions.
+Hello this is a template repo that I have for a FastAPI-CRUD app. It's my own custom template so that I can quickly build fastapi (or any python app) and deploy it to GCP
+in the future.
+
+configured with pre-commit-hooks and GitHub actions.
 
 # What to do when first cloning this project
 Make a virtual env however you want.
 ```
-python -m venv .dev-venv
-source .dev-venv/bin/activate
+python -m venv .venv
+source .venv/bin/activate
 ```
 
 Install dependencies
 ```
-pip install -r dev-requirements.txt
+pip install -r requirements.txt
 pre-commit install
 pre-commit
 ```
 
+# Needed Secrets
+APP_NAME = python app name fastapi-crud
+GCP_CREDENTIALS = GCP service account
+
+
+
 # Pre-commit Hooks
-- isort, black, flake8, some check yaml, toml all done by .pre-commit-config.yaml
-  - additional flake8 and isort configuration done in tox.ini
+- isort, flake8, mypy, some check yaml, toml all done by .pre-commit-config.yaml
+  - additional flake8 and isort configuration done in tox.ini and setup.cfg
 
 # Actions
-- Linting done by pre-commit hooks - your code should be linted before committing
+- `python_ci.yaml` - Linting and Tests runs on all branches. Must change APP_NAME env if you are renaming it.
 - Run tests on push and pull requests - You should enable branch protection on main, so you can't push to master without passing tests
   - testing is only done on the my-python-app module.
 TODO:
 - If tests pass build in docker image and push to gcr (first need gcr with terraform)
 - Deploy somewhere?
 
-test locally with [act](https://github.com/nektos/act)
+- `google-cloud-run-deply.yaml` - Builds dockerfile in fastapi-crud and deploys it to google cloud run.
 
-# Sample python module
-I have a my-python-app module that doesn't do much, but it has tests and docker container.
+- `flyway-migration.yaml` - runs flyway migrations located in fastapi-crud/migrations folder to CloudSQL
+
+
+test locally with [act](https://github.com/nektos/act) sort of :shrug:
+
+# FastAPI-CRUD
+What I want a dummy app fastapi server thats connected to a cloudsql database
+
+I want it deployed to cloud run and to have it own https url
+
 
 # Terraform_stuff
 Read the read me in that folder to get started
