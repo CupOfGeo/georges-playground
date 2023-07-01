@@ -18,8 +18,8 @@ pre-commit
 ```
 
 # Needed Secrets
-APP_NAME = python app name fastapi-crud
-GCP_CREDENTIALS = GCP service account
+APP_NAME - python app name fastapi-crud - ideally we have one deployment per repo but its just little me so ill probably put multiple apps here and need to change this.
+GCP_CREDENTIALS - GCP service account
 
 
 
