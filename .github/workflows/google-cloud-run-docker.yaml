@@ -126,3 +126,23 @@ jobs:
       # If required, use the Cloud Run url output in later steps
       - name: Show Output
         run: echo ${{ steps.deploy.outputs.url }}
+
+
+# TERRAFORM REPO
+#  terraform:
+#    needs: test
+#    if: ${{ github.event.event_name == 'pull_request' }}
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checks out repository
+#        uses: actions/checkout@v3
+#        with:
+#          ref: ${{ github.event.pull_request.head.ref }}
+#
+#      - name: Render terraform docs inside the README.md and push changes back to PR branch
+#        uses: terraform-docs/gh-actions@v1.0.0
+#        with:
+#          working-dir: .
+#          output-file: README.md
+#          output-method: inject
+#          git-push: "true"
