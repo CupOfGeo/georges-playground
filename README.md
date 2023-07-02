@@ -21,6 +21,7 @@ pre-commit
 APP_NAME - python app name fastapi-crud - ideally we have one deployment per repo but its just little me so ill probably put multiple apps here and need to change this. Also Note now vscode uses .env from the project level. Also also dependency bot would use requirements.txt on thought would be to combine .envs and requirements.txt into the project level with a shell script that would run with durring pre-commit. could work for .env but requirements could have conflicts. Im going back and forth on it bc of the terraform which I might not even use. i think its clearly better to use one deployment per repo and i shall stick with that.
 GCP_CREDENTIALS - GCP service account
 
+FASTAPI_CRUD_DB_PASS= gcp database password
 
 
 # Pre-commit Hooks

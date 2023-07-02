@@ -4,21 +4,35 @@ on:
   push:
     branches:
       - main
-
+env:
+  PROJECT_ID: 'playground-geo' # TODO: update Google Cloud project id
+  REGION: 'us-central1' # TODO: update Cloud Run service region
+  gcp-cloud-sql-instance: 'crud-fastapi-db'
 
 jobs:
   migration:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: gcloud install dependencies
-        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v1'
         with:
-          project_id: ${{ env.gcp-project-name }}
-          service_account_key: ${{ secrets.GCP_SA_KEY }}
-          export_default_credentials: true
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v1'
+
+      - name: 'Use gcloud CLI'
+        run: 'gcloud info'
+
+      # - name: gcloud install dependencies
+      #   uses: GoogleCloudPlatform/github-actions/setup-gcloud@v1.1.1
+      #   with:
+      #     project_id: ${{ env.PROJECT_ID }}
+      #     service_account_key: ${{ secrets.GCP_CREDENTIALS }}
+      #     export_default_credentials: true
 
       - name: Get Cloud SQL Proxy
         run: |
@@ -34,30 +48,38 @@ jobs:
           TYPEORM_PORT: 5432
           TYPEORM_USERNAME: user
           TYPEORM_DATABASE: database_name
-          TYPEORM_PASSWORD: ${{ secrets.CLOUD_SQL_PASSWORD }}
+          TYPEORM_PASSWORD: ${{ secrets.FASTAPI_CRUD_DB_PASS }}
           TYPEORM_MIGRATIONS: ./migration/**/*.ts
         run: |
-          ./cloud_sql_proxy -instances=nice-cb-dev:us-central1:nice-db-dev=tcp:5432 &
-          npm run orm:migration:run:staging
+          ./cloud_sql_proxy -instances=crud_fastapi_db:us-central1:crud_fastapi_db=tcp:5432
 
-
-      - name: Set up JDK 1.8
-        uses: actions/setup-java@v2
-        with:
-          java-version: '8'
-          distribution: 'adopt'
-
-      - name: Cache Flyway
-        uses: actions/cache@v2
-        with:
-          path: ~/flyway
-          key: ${{ runner.os }}-flyway-${{ hashFiles('**/flyway*.conf') }}
-
-      - name: Download Flyway
+      - name: Run Flyway Migration
         run: |
-          mkdir -p ~/flyway
-          curl -L https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/7.15.0/flyway-commandline-7.15.0-linux-x64.tar.gz -o ~/flyway/flyway-commandline.tar.gz
-          tar -xzf ~/flyway/flyway-commandline.tar.gz --strip-components=1 -C ~/flyway
+          docker run --rm \
+          -v ${{ github.workspace }}/crud-fastapi/migrations:/flyway/sql \
+          flyway/flyway:9 \
+          -url=jdbc:postgresql://localhost:5432/crud_fastapi_app \
+          -user=crud_fastapi_app \
+          -password=${{ secrets.FASTAPI_CRUD_DB_PASS }} \
+          migrate
 
-      - name: Run Flyway Migrate
-        run: ~/flyway/flyway -user="crud_fastapi_app" -password="${{ secrets.DB_PASSWORD }}" -url="jdbc:postgresql:///${{ secrets.DB_HOST }}:5432/crud_fastapi_app" -locations="filesystem:/crud-fastapi/migrationsl" migrate
+      # - name: Set up JDK 1.8
+      #   uses: actions/setup-java@v2
+      #   with:
+      #     java-version: '8'
+      #     distribution: 'adopt'
+
+      # - name: Cache Flyway
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: ~/flyway
+      #     key: ${{ runner.os }}-flyway-${{ hashFiles('**/flyway*.conf') }}
+
+      # - name: Download Flyway
+      #   run: |
+      #     mkdir -p ~/flyway
+      #     curl -L https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/7.15.0/flyway-commandline-7.15.0-linux-x64.tar.gz -o ~/flyway/flyway-commandline.tar.gz
+      #     tar -xzf ~/flyway/flyway-commandline.tar.gz --strip-components=1 -C ~/flyway
+
+      # - name: Run Flyway Migrate
+      #   run: ~/flyway/flyway -user="crud_fastapi_app" -password="${{ secrets.FASTAPI_CRUD_DB_PASS }}" -url="jdbc:postgresql:///localhost:5432/crud_fastapi_app" -locations="filesystem:/crud-fastapi/migrationsl" migrate
