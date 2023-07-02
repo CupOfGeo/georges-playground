@@ -29,6 +29,3 @@ jobs:
       run: docker build . --file Dockerfile --tag my-image-name:$(date +%s) --target test
       env:
         FASTAPI_CRUD_DB_PASS: pass
-
-
-        
