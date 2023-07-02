@@ -19,7 +19,7 @@ def get_app() -> FastAPI:
     app = FastAPI(
         title="CRUD-FastAPI",
         version="0.0.1",
-        docs_url="/api/docs",
+        docs_url="/",
         redoc_url="/api/redoc",
         openapi_url="/api/openapi.json",
         default_response_class=UJSONResponse,
