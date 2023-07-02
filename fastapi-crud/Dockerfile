@@ -33,6 +33,9 @@ COPY requirements.txt requirements.txt
 # Install any needed packages specified in requirements.txt
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
 
+ARG FASTAPI_CRUD_DB_PASS
+ARG FASTAPI_CRUD_DB_HOST
+
 # Copy the current directory contents into the container at /app
 COPY . /app
 

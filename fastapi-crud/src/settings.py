@@ -48,7 +48,7 @@ class Settings(BaseSettings):
     discord_client_secret: str = ""
 
     # Variables for the database
-    db_host: str = "localhost"
+    db_host: str = "0.0.0.0"
     db_port: int = 5432
     db_user: str = "crud_fastapi_app"
     db_pass: str = "pass"
