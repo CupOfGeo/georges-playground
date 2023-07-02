@@ -20,7 +20,7 @@ terraform {
   2) commented out the provider google part
 but
 
-- It's ok the name should be hardcoded  
+- It's ok the name should be hardcoded
 
 # Pre Commit Hooks
 https://medium.com/slalom-build/pre-commit-hooks-for-terraform-9356ee6db882 \
