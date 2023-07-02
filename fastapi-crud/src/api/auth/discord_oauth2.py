@@ -1,6 +1,5 @@
 import httpx
 
-
 # Replace these with your Discord client ID and secret
 OAUTH2_URL = "https://discord.com/api/oauth2/authorize"
 TOKEN_URL = "https://discord.com/api/oauth2/token"

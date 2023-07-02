@@ -1,13 +1,11 @@
 # from pydantic import BaseModel
 # from typing import Optional
 
-from fastapi import HTTPException, status
+from fastapi import APIRouter, HTTPException, status
 from fastapi.responses import RedirectResponse
-
-from fastapi import APIRouter
 from src.api.auth.discord_oauth2 import DiscordOAuth2
-from yarl import URL
 from src.settings import settings
+from yarl import URL
 
 router = APIRouter()
 
