@@ -44,8 +44,8 @@ class Settings(BaseSettings):
 
     log_level: LogLevel = LogLevel.INFO
 
-    discord_client_id: int
-    discord_client_secret: str
+    discord_client_id: int = 0
+    discord_client_secret: str = ""
 
     # Variables for the database
     db_host: str = "localhost"
