@@ -26,6 +26,5 @@ jobs:
     - name: Build the test Docker image
       working-directory: ./fastapi-crud
       run: docker build . --file Dockerfile --tag my-image-name:$(date +%s) --target test
-
-    # - name: Run pre-commit hooks.
-    #   uses: pre-commit/action@v3.0.0
+      env:
+        FASTAPI_CRUD_DB_PASS: pass
