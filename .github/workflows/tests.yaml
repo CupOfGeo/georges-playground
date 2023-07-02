@@ -1,0 +1,23 @@
+name: Docker Test
+
+on:
+    pull_request:
+      branches: [ main ]
+
+concurrency: tests-${{ github.sha }}
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the test Docker image
+      working-directory: ./fastapi-crud
+      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s) --target test
+
+    - name: Run integration tests against dev database.
+      if: github.ref == 'refs/heads/main'
+      run: docker run my-image-name:$(date +%s)
