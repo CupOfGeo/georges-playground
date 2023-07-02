@@ -15,7 +15,7 @@ flyway -url=jdbc:postgresql://localhost:5432/crud_fastapi_db -user=crud_fastapi_
 
 # Then build and run the app
 docker build --target prod -t crud-fastapi:latest .
-docker run --name api --restart always --env-file .env -p 8000:8000 crud-fastapi:latest
+docker run --name api --restart always --env-file .env -p 8080:8080 crud-fastapi:latest
 ```
 
 you can also run the app localy with

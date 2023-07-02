@@ -31,7 +31,7 @@ class Settings(BaseSettings):
     """
 
     host: str = "localhost"
-    port: int = 8000
+    port: int = 8080
     # quantity of workers for uvicorn
     workers_count: int = 1
     # Enable uvicorn reloading
