@@ -1,7 +1,8 @@
 name: Docker Test
 
 on:
-  [push]
+    pull_request:
+      branches: [ main ]
 
 concurrency: tests-${{ github.sha }}
 
@@ -11,22 +12,12 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    services:
-        postgres:
-          image: postgres:14
-          env:
-            POSTGRES_PASSWORD: pass
-            POSTGRES_USER: crud_fastapi_app
-            POSTGRES_DB: crud_fastapi_db
-          ports:
-            - 5432:5432
-          options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-
     steps:
     - uses: actions/checkout@v3
     - name: Build the test Docker image
       working-directory: ./fastapi-crud
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s) --target test --build-arg FASTAPI_CRUD_DB_PASS=${{ env.FASTAPI_CRUD_DB_PASS }} --build-arg FASTAPI_CRUD_DB_HOST=${{ env.FASTAPI_CRUD_DB_HOST }}
-      env:
-        FASTAPI_CRUD_DB_PASS: pass
-        FASTAPI_CRUD_DB_HOST: postgres
+      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s) --target test
+
+    - name: Run integration tests against dev database.
+      if: github.ref == 'refs/heads/main'
+      run: docker run my-image-name:$(date +%s)

@@ -40,4 +40,4 @@ ARG FASTAPI_CRUD_DB_HOST
 COPY . /app
 
 # Run app.py when the container launches
-RUN pytest -vv .
+RUN pytest -vv src/tests/unit
