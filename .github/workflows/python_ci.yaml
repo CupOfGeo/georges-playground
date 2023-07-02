@@ -4,7 +4,7 @@ name: Run Pre-Commit & Tests
 
 # Trigger the workflow on both push (to the main repository)
 # and pull requests (against the main repository, but from any branch).
-on: [push, pull_request]
+on: [push]
 # Brand-new concurrency setting! This ensures that not more than one run can be triggered for the same commit.
 # It is useful for pull requests coming from the main repository since both triggers will match.
 concurrency: tests-${{ github.sha }}
@@ -13,12 +13,23 @@ concurrency: tests-${{ github.sha }}
 jobs:
   test:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_PASSWORD: pass
+          POSTGRES_USER: crud_fastapi_app
+          POSTGRES_DB: crud_fastapi_db
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
 
     env:
       # Set an environment variable to select pip's cache directory for us to actually cache between runs.
       PIP_CACHE_DIR: /tmp/pip-cache-dir
       # The Python version your project uses. Feel free to change this if required.
-      PYTHON_VERSION: 3.9
+      PYTHON_VERSION: 3.12.0-beta.3
 
     steps:
       # Checks out the repository in the current folder.
@@ -42,9 +53,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ env.PIP_CACHE_DIR }}
-          key: "python-pip-${{ runner.os }}-\
-          ${{ steps.python.outputs.python-version }}-\
-          ${{ hashFiles('./Pipfile', './Pipfile.lock') }}"
+          key: "python-pip-${{ runner.os }}-${{ steps.python.outputs.python-version }}-${{ hashFiles('./Pipfile', './Pipfile.lock') }}"
 
       # Uncomment the step that matches your setup.
 
@@ -56,6 +65,7 @@ jobs:
         env:
           # Force pre-commit to do a system install.
           PIP_USER: 0
+          DATABASE_URL: postgresql://fastapi-crud:pass@localhost:5432/testdb
 
       - name: Run pre-commit hooks.
         uses: pre-commit/action@v3.0.0

@@ -10,7 +10,6 @@ from sqlalchemy.ext.asyncio import (
     create_async_engine,
 )
 from src.api.application import get_app
-from src.db.dependencies import get_db_session
 from src.db.utils import create_database, drop_database
 from src.settings import settings
 
@@ -82,7 +81,7 @@ async def dbsession(
 
 @pytest.fixture
 def fastapi_app(
-    dbsession: AsyncSession,
+    # dbsession: AsyncSession,
 ) -> FastAPI:
     """
     Fixture for creating FastAPI app.
@@ -90,7 +89,7 @@ def fastapi_app(
     :return: fastapi app with mocked dependencies.
     """
     application = get_app()
-    application.dependency_overrides[get_db_session] = lambda: dbsession
+    # application.dependency_overrides[get_db_session] = lambda: dbsession
     return application  # noqa: WPS331
 
 

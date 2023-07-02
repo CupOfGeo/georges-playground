@@ -12,6 +12,7 @@ from src.settings import settings
 router = APIRouter()
 
 # also set in discord dev console
+# https://discord.com/developers/applications/{client-id}/oauth2/general
 REDIRECT_ROUTE = "/discord/login_auth"
 
 redirect_url = URL.build(scheme='http',

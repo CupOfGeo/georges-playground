@@ -73,7 +73,7 @@ class Settings(BaseSettings):
 
     class Config:
         env_file = ".env"
-        env_prefix = "CRUD_FASTAPI_"
+        env_prefix = "FASTAPI_CRUD_"
         env_file_encoding = "utf-8"
 
 

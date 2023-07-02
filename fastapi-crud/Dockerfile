@@ -36,7 +36,5 @@ RUN pip install --trusted-host pypi.python.org -r requirements.txt
 # Copy the current directory contents into the container at /app
 COPY . /app
 
-RUN pre-commit run --all-files
-
 # Run app.py when the container launches
-CMD ["pytest", "-vv", "."]
+RUN pytest -vv .

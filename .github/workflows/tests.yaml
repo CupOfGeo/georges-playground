@@ -1,0 +1,31 @@
+name: Docker Test
+
+on:
+  [push]
+
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    services:
+        postgres:
+          image: postgres:14
+          env:
+            POSTGRES_PASSWORD: pass
+            POSTGRES_USER: crud_fastapi_app
+            POSTGRES_DB: crud_fastapi_db
+          ports:
+            - 5432:5432
+          options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the test Docker image
+      working-directory: ./fastapi-crud
+      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s) --target test
+
+    # - name: Run pre-commit hooks.
+    #   uses: pre-commit/action@v3.0.0
