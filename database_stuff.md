@@ -1,6 +1,6 @@
 #DB stuff
 
-### les creat a postgres 14 database in container
+### les create a postgres 14 database in container
 https://hub.docker.com/_/postgres/
 ```sh
 docker run -d --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=pass -v postgres:/var/lib/postgresql/data postgres:14
@@ -21,7 +21,7 @@ CREATE DATABASE test;
 \c test
 ```
 
-database exsample
+database example
 
 ### Lets make a table called scrapes with some things
 ```sql

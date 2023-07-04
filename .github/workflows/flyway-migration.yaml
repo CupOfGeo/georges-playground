@@ -1,12 +1,11 @@
 name: Flyway Migration
-# https://github.com/google-github-actions/auth
 on: push
     # branches:
     #   - main
 env:
   PROJECT_ID: 'playground-geo' # TODO: update Google Cloud project id
   REGION: 'us-central1' # TODO: update Cloud Run service region
-  gcp-cloud-sql-instance: 'crud-fastapi-db'
+  gcp-cloud-sql-instance: 'crud-fastapi-db' # TODO this should just be ${{APP_NAME}}-db and should be made with terraform
 
 jobs:
   migration:
@@ -18,50 +17,30 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # - id: 'auth'
-      #   uses: 'google-github-actions/auth@v1'
-      #   with:
-      #     credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
-
       - id: 'auth'
         name: Google Auth
         uses: 'google-github-actions/auth@v1'
         with:
           # token_format: 'access_token' # use for debugging
-          workload_identity_provider: 'projects/643420178383/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
-          service_account: 'my-service-account@playground-geo.iam.gserviceaccount.com'
-          # workload_identity_provider: '${{ secrets.WIF_PROVIDER }}' # e.g. - projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider
-          # service_account: '${{ secrets.WIF_SERVICE_ACCOUNT }}' # e.g. - my-service-account@my-project.iam.gserviceaccount.com
+          workload_identity_provider: '${{ secrets.WIF_PROVIDER }}'
+          service_account: '${{ secrets.WIF_SERVICE_ACCOUNT }}'
 
 
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v1'
-
-      # - name: 'Use gcloud CLI'
-        # run: 'gcloud info'
-
-      # - name: gcloud install dependencies
-      #   uses: GoogleCloudPlatform/github-actions/setup-gcloud@v1.1.1
-      #   with:
-      #     project_id: ${{ env.PROJECT_ID }}
-      #     service_account_key: ${{ secrets.GCP_CREDENTIALS }}
-      #     export_default_credentials: true
 
       - name: Get Cloud SQL Proxy
         run: |
           curl -o cloud-sql-proxy https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.4.0/cloud-sql-proxy.linux.amd64
           chmod +x cloud-sql-proxy
 
-      # gcloud sql connect ${{env.gcp-cloud-sql-instance}} --user=postgres
-
       - name: Backup staging database
         run: |
           gcloud sql backups create --instance=${{env.gcp-cloud-sql-instance}}
 
       - name: Run Proxy and Flyway Migration
-        # run: echo "FLYWAY! might connect"
         run: |
-          ./cloud-sql-proxy --address 0.0.0.0 --port 5432 playground-geo:us-central1:crud-fastapi-db &
+          ./cloud-sql-proxy --address 0.0.0.0 --port 5432 ${{env.PROJECT_ID}}:${{env.REGION}}:${{env.gcp-cloud-sql-instance}} &
 
           # Wait for the proxy to be up
           echo "Waiting for the proxy to start..."
@@ -70,30 +49,9 @@ jobs:
           done
 
           docker run --network=host --rm \
-          -v ${{ github.workspace }}/fastapi-crud/migrations:/flyway/sql \
+          -v ${{ github.workspace }}/${{secrets.APP_NAME}}/migrations:/flyway/sql \
           flyway/flyway:9 \
           -url=jdbc:postgresql://localhost:5432/postgres \
           -user=postgres \
           -password=${{ secrets.FASTAPI_CRUD_DB_PASS }} \
           migrate
-
-      # - name: Set up JDK 1.8
-      #   uses: actions/setup-java@v2
-      #   with:
-      #     java-version: '8'
-      #     distribution: 'adopt'
-
-      # - name: Cache Flyway
-      #   uses: actions/cache@v2
-      #   with:
-      #     path: ~/flyway
-      #     key: ${{ runner.os }}-flyway-${{ hashFiles('**/flyway*.conf') }}
-
-      # - name: Download Flyway
-      #   run: |
-      #     mkdir -p ~/flyway
-      #     curl -L https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/7.15.0/flyway-commandline-7.15.0-linux-x64.tar.gz -o ~/flyway/flyway-commandline.tar.gz
-      #     tar -xzf ~/flyway/flyway-commandline.tar.gz --strip-components=1 -C ~/flyway
-
-      # - name: Run Flyway Migrate
-      #   run: ~/flyway/flyway -user="crud_fastapi_app" -password="${{ secrets.FASTAPI_CRUD_DB_PASS }}" -url="jdbc:postgresql:///localhost:5432/crud_fastapi_app" -locations="filesystem:/crud-fastapi/migrationsl" migrate
