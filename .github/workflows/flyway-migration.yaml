@@ -61,7 +61,7 @@ jobs:
           TYPEORM_PASSWORD: ${{ secrets.FASTAPI_CRUD_DB_PASS }}
           TYPEORM_MIGRATIONS: ./migration/**/*.ts
         run: |
-          ./cloud_sql_proxy -instances=crud-fastapi-db:us-central1:crud-fastapi-db=tcp:5432
+          ./cloud_sql_proxy -instances=playground-geo:us-central1:crud-fastapi-db=tcp:5432
 
       - name: Backup staging database
         run: |
