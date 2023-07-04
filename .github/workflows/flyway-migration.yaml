@@ -49,7 +49,6 @@ jobs:
 
       - name: Cloud SQL Connect
         run: |
-          gcloud info \
           gcloud sql connect ${{env.gcp-cloud-sql-instance}} --user=postgres
 
       - name: Backup staging database
