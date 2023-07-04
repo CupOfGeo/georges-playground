@@ -27,6 +27,7 @@ jobs:
         name: Google Auth
         uses: 'google-github-actions/auth@v1'
         with:
+          token_format: 'access_token'
                                       #  projects/643420178383/locations/global/workloadIdentityPools/my-pool/providers/my-provider
           workload_identity_provider: 'projects/643420178383/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
           service_account: 'my-service-account@playground-geo.iam.gserviceaccount.com'
