@@ -37,8 +37,8 @@ jobs:
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v1'
 
-      - name: 'Use gcloud CLI'
-        run: 'gcloud info'
+      # - name: 'Use gcloud CLI'
+        # run: 'gcloud info'
 
       # - name: gcloud install dependencies
       #   uses: GoogleCloudPlatform/github-actions/setup-gcloud@v1.1.1
@@ -51,10 +51,7 @@ jobs:
         run: |
           wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql_proxy
           chmod +x cloud_sql_proxy
-      - name: Backup staging database
-        run: |
-          gcloud sql backups create --instance=${{env.gcp-cloud-sql-instance}}
-      - name: Run migration
+      - name: Run Cloud SQL Proxy
         env:
           TYPEORM_CONNECTION: postgres
           TYPEORM_HOST: 127.0.0.1
@@ -65,6 +62,10 @@ jobs:
           TYPEORM_MIGRATIONS: ./migration/**/*.ts
         run: |
           ./cloud_sql_proxy -instances=crud_fastapi_db:us-central1:crud_fastapi_db=tcp:5432
+
+      - name: Backup staging database
+        run: |
+          gcloud sql backups create --instance=${{env.gcp-cloud-sql-instance}}
 
       - name: Run Flyway Migration
         run: echo "FLYWAY! might connect"
