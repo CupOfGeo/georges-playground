@@ -37,12 +37,6 @@ jobs:
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v1'
 
-  # Now you can run gcloud commands authenticated as the impersonated service account.
-      - id: 'gcloud'
-        name: 'gcloud'
-        run: |-
-          gcloud secrets versions access "latest" --secret "my-secret"
-
       # - name: 'Use gcloud CLI'
         # run: 'gcloud info'
 
@@ -54,7 +48,9 @@ jobs:
       #     export_default_credentials: true
 
       - name: Cloud SQL Connect
-        run: gcloud sql connect crud-fastapi-db --user=postgres
+        run: |
+          gcloud info \
+          gcloud sql connect ${{env.gcp-cloud-sql-instance}} --user=postgres
 
       - name: Backup staging database
         run: |
