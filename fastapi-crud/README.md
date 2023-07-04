@@ -65,9 +65,30 @@ In cloud run i clicked manage custom domains I registered georges-playground.com
 
 setting up https://cloud.google.com/blog/products/identity-security/enabling-keyless-authentication-from-github-actions
 
-follow given commands then i also added the cloudsql.client role
+follow given commands then i also added the cloudsql.editor role
 ```sh
 gcloud projects add-iam-policy-binding playground-geo \
     --member='serviceAccount:my-service-account@playground-geo.iam.gserviceaccount.com' \
-    --role='roles/cloudsql.client'
+    --role='roles/cloudsql.editor'
 ```
+
+also for local connecting/ testing to the cloud sql database
+2 ways to connect.
+1) cloud-sql-proxy - how it used in the flyway migration action i like that i don't need to supply the ip
+https://cloud.google.com/sql/docs/mysql/connect-auth-proxy#mac-m1
+```
+chmod +x cloud-sql-proxy
+sudo mv cloud-sql-proxy /usr/local/bin/
+```
+connection arguments
+```
+-url=jdbc:postgresql://localhost:5432/crud_fastapi_app \
+-user=crud_fastapi_app \
+-password=${{ secrets.FASTAPI_CRUD_DB_PASS }} \
+```
+
+2)
+```
+gcloud sql connect crud-fastapi-db --user=postgres
+```
+then connect to your instances public ip as the host.
