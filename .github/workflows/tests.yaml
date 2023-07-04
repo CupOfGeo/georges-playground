@@ -1,6 +1,6 @@
 name: Docker Test
 
-on: pull_request
+on: push
 
 concurrency: tests-${{ github.sha }}
 
