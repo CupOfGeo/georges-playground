@@ -65,15 +65,9 @@ In cloud run i clicked manage custom domains I registered georges-playground.com
 
 setting up https://cloud.google.com/blog/products/identity-security/enabling-keyless-authentication-from-github-actions
 
-gcloud iam workload-identity-pools create "my-pool" \
-  --project="playground-geo" \
-  --location="global" \
-  --display-name="Demo pool fastapi-crud"
-
-gcloud iam workload-identity-pools providers create-oidc "my-provider" \
-  --project="playground-geo" \
-  --location="global" \
-  --workload-identity-pool="my-pool" \
-  --display-name="Demo provider" \
-  --attribute-mapping="google.subject=assertion.sub,attribute.actor=assertion.actor,attribute.aud=assertion.aud" \
-  --issuer-uri="https://token.actions.githubusercontent.com"
+follow given commands then i also added the cloudsql.client role
+```sh
+gcloud projects add-iam-policy-binding playground-geo \
+    --member='serviceAccount:my-service-account@playground-geo.iam.gserviceaccount.com' \
+    --role='roles/cloudsql.client'
+```
