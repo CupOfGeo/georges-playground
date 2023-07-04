@@ -1,5 +1,5 @@
 name: Flyway Migration
-# thanks to https://haha.world/recipe-gh-action-cloud-sql/
+# https://github.com/google-github-actions/auth
 on: push
     # branches:
     #   - main
@@ -27,8 +27,7 @@ jobs:
         name: Google Auth
         uses: 'google-github-actions/auth@v1'
         with:
-          token_format: 'access_token'
-                                      #  projects/643420178383/locations/global/workloadIdentityPools/my-pool/providers/my-provider
+          # token_format: 'access_token' use for debugging
           workload_identity_provider: 'projects/643420178383/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
           service_account: 'my-service-account@playground-geo.iam.gserviceaccount.com'
           # workload_identity_provider: '${{ secrets.WIF_PROVIDER }}' # e.g. - projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider
@@ -50,7 +49,9 @@ jobs:
 
       - name: Cloud SQL Connect
         run: |
-          gcloud config get-value account
+          curl -o cloud-sql-proxy https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.4.0/cloud-sql-proxy.linux.amd64
+          chmod +x cloud-sql-proxy
+          ./cloud-sql-proxy --address 0.0.0.0 --port 5432 playground-geo:us-central1:crud-fastapi-db
 
       # gcloud sql connect ${{env.gcp-cloud-sql-instance}} --user=postgres
 
@@ -59,15 +60,15 @@ jobs:
           gcloud sql backups create --instance=${{env.gcp-cloud-sql-instance}}
 
       - name: Run Flyway Migration
-        run: echo "FLYWAY! might connect"
-        # run: |
-        #   docker run --rm \
-        #   -v ${{ github.workspace }}/crud-fastapi/migrations:/flyway/sql \
-        #   flyway/flyway:9 \
-        #   -url=jdbc:postgresql://localhost:5432/crud_fastapi_app \
-        #   -user=crud_fastapi_app \
-        #   -password=${{ secrets.FASTAPI_CRUD_DB_PASS }} \
-        #   migrate
+        # run: echo "FLYWAY! might connect"
+        run: |
+          docker run --rm \
+          -v ${{ github.workspace }}/crud-fastapi/migrations:/flyway/sql \
+          flyway/flyway:9 \
+          -url=jdbc:postgresql://localhost:5432/crud_fastapi_app \
+          -user=crud_fastapi_app \
+          -password=${{ secrets.FASTAPI_CRUD_DB_PASS }} \
+          migrate
 
       # - name: Set up JDK 1.8
       #   uses: actions/setup-java@v2
