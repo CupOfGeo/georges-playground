@@ -1,9 +1,8 @@
 name: Flyway Migration
 # thanks to https://haha.world/recipe-gh-action-cloud-sql/
-on:
-  push:
-    branches:
-      - main
+on: push
+    # branches:
+    #   - main
 env:
   PROJECT_ID: 'playground-geo' # TODO: update Google Cloud project id
   REGION: 'us-central1' # TODO: update Cloud Run service region
