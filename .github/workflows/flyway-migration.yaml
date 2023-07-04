@@ -69,11 +69,11 @@ jobs:
             sleep 0.5 # wait for half a second before checking again
           done
 
-          docker run --rm \
+          docker run --network=host --rm \
           -v ${{ github.workspace }}/crud-fastapi/migrations:/flyway/sql \
           flyway/flyway:9 \
-          -url=jdbc:postgresql://localhost:5432/crud_fastapi_app \
-          -user=crud_fastapi_app \
+          -url=jdbc:postgresql://localhost:5432/postgres \
+          -user=postgres \
           -password=${{ secrets.FASTAPI_CRUD_DB_PASS }} \
           migrate
 
