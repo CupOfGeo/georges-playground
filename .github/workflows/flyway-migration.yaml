@@ -47,11 +47,10 @@ jobs:
       #     service_account_key: ${{ secrets.GCP_CREDENTIALS }}
       #     export_default_credentials: true
 
-      - name: Cloud SQL Connect
+      - name: Get Cloud SQL Proxy
         run: |
           curl -o cloud-sql-proxy https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.4.0/cloud-sql-proxy.linux.amd64
           chmod +x cloud-sql-proxy
-          ./cloud-sql-proxy --address 0.0.0.0 --port 5432 playground-geo:us-central1:crud-fastapi-db
 
       # gcloud sql connect ${{env.gcp-cloud-sql-instance}} --user=postgres
 
@@ -59,9 +58,10 @@ jobs:
         run: |
           gcloud sql backups create --instance=${{env.gcp-cloud-sql-instance}}
 
-      - name: Run Flyway Migration
+      - name: Run Proxy and Flyway Migration
         # run: echo "FLYWAY! might connect"
         run: |
+          /cloud-sql-proxy --address 0.0.0.0 --port 5432 playground-geo:us-central1:crud-fastapi-db &
           docker run --rm \
           -v ${{ github.workspace }}/crud-fastapi/migrations:/flyway/sql \
           flyway/flyway:9 \
