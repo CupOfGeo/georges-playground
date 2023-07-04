@@ -18,13 +18,24 @@ docker build --target prod -t crud-fastapi:latest .
 docker run --name api --restart always --env-file .env -p 8080:8080 crud-fastapi:latest
 ```
 
-you can also run the app localy with
+you can also run the app locally with
 ```sh
 python -m src
 ```
 
+# Tests
+For running tests on your local machine.
+- Run the unit tests pytest.
+```sh
+pytest -vv /tests/unit
+```
 
-# My docker compose is extreamly buged right now might need to try agin after a restart something with .envs caching and the health checks dont work
+- Run all with *you need to start a database for the integration tests.*
+```sh
+pytest -vv .
+```
+---
+### My docker compose is extremely bugged right now might need to try agin after a restart something with .envs caching and the health checks don't work
 
 ## Running with docker-compose
 ```bash
@@ -40,10 +51,29 @@ docker-compose -f docker-compose.yml -f docker-compose.dev.yml --project-directo
 docker-compose -f docker-compose.yml -f docker-compose.dev.yml --project-directory . down
 ```
 
-For running tests on your local machine.
-1. you need to start a database.
 
-2. Run the pytest.
-```bash
-pytest -vv .
-```
+# Notes
+So I split the tests into integration and unit tests with the respected folders and have just the unit tests run.
+
+New test.yaml just builds the dockerfile with --target test so no more having to go into the github action and change python versions and things. It does cd into the fastapi-crud folder.
+
+This bring me to the biggest debate of do i want multiple services/deployments in one repo or do i want to make multiple repos.
+
+
+I bought a domain for the cloud run.
+In cloud run i clicked manage custom domains I registered georges-playground.com and added the mapping I also created a cloud DNS. It gave me some DNS records that you have to add to cloud DNS. In cloud DNS -> in the zone you just created you can add standard and add the `A` and `AAAA` records.
+
+setting up https://cloud.google.com/blog/products/identity-security/enabling-keyless-authentication-from-github-actions
+
+gcloud iam workload-identity-pools create "my-pool" \
+  --project="playground-geo" \
+  --location="global" \
+  --display-name="Demo pool fastapi-crud"
+
+gcloud iam workload-identity-pools providers create-oidc "my-provider" \
+  --project="playground-geo" \
+  --location="global" \
+  --workload-identity-pool="my-pool" \
+  --display-name="Demo provider" \
+  --attribute-mapping="google.subject=assertion.sub,attribute.actor=assertion.actor,attribute.aud=assertion.aud" \
+  --issuer-uri="https://token.actions.githubusercontent.com"

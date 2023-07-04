@@ -29,14 +29,11 @@ FASTAPI_CRUD_DB_PASS= gcp database password
   - additional flake8 and isort configuration done in tox.ini and setup.cfg
 
 # Actions
-- `python_ci.yaml` - Linting and Tests runs on all branches. Must change APP_NAME env if you are renaming it.
+- `tests.yaml` - Linting and unit tests runs on all branches. Integration tests will run on pull requests to main.
+ Must change APP_NAME env if you are renaming it.
 - Run tests on push and pull requests - You should enable branch protection on main, so you can't push to master without passing tests
-  - testing is only done on the my-python-app module.
-TODO:
-- If tests pass build in docker image and push to gcr (first need gcr with terraform)
-- Deploy somewhere?
 
-- `google-cloud-run-deply.yaml` - Builds dockerfile in fastapi-crud and deploys it to google cloud run.
+- `google-cloud-run-deply.yaml` - Builds dockerfile fastapi-crud and deploys it to google cloud run. Now with domain georges-playground.com
 
 - `flyway-migration.yaml` - runs flyway migrations located in fastapi-crud/migrations folder to CloudSQL
 

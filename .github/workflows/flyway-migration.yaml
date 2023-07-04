@@ -16,10 +16,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - id: 'auth'
+      # - id: 'auth'
+      #   uses: 'google-github-actions/auth@v1'
+      #   with:
+      #     credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+
+      - name: Google Auth
         uses: 'google-github-actions/auth@v1'
+        id: 'auth'
         with:
-          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+          token_format: 'access_token'
+          workload_identity_provider: '${{ secrets.WIF_PROVIDER }}' # e.g. - projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider
+          service_account: '${{ secrets.WIF_SERVICE_ACCOUNT }}' # e.g. - my-service-account@my-project.iam.gserviceaccount.com
+
 
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v1'
@@ -54,14 +63,15 @@ jobs:
           ./cloud_sql_proxy -instances=crud_fastapi_db:us-central1:crud_fastapi_db=tcp:5432
 
       - name: Run Flyway Migration
-        run: |
-          docker run --rm \
-          -v ${{ github.workspace }}/crud-fastapi/migrations:/flyway/sql \
-          flyway/flyway:9 \
-          -url=jdbc:postgresql://localhost:5432/crud_fastapi_app \
-          -user=crud_fastapi_app \
-          -password=${{ secrets.FASTAPI_CRUD_DB_PASS }} \
-          migrate
+        run: echo "FLYWAY! might connect"
+        # run: |
+        #   docker run --rm \
+        #   -v ${{ github.workspace }}/crud-fastapi/migrations:/flyway/sql \
+        #   flyway/flyway:9 \
+        #   -url=jdbc:postgresql://localhost:5432/crud_fastapi_app \
+        #   -user=crud_fastapi_app \
+        #   -password=${{ secrets.FASTAPI_CRUD_DB_PASS }} \
+        #   migrate
 
       # - name: Set up JDK 1.8
       #   uses: actions/setup-java@v2
