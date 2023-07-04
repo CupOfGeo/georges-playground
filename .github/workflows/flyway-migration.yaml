@@ -70,7 +70,7 @@ jobs:
           done
 
           docker run --network=host --rm \
-          -v ${{ github.workspace }}/crud-fastapi/migrations:/flyway/sql \
+          -v ${{ github.workspace }}/fastapi-crud/migrations:/flyway/sql \
           flyway/flyway:9 \
           -url=jdbc:postgresql://localhost:5432/postgres \
           -user=postgres \
