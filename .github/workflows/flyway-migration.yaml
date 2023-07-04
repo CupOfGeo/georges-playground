@@ -27,7 +27,7 @@ jobs:
         name: Google Auth
         uses: 'google-github-actions/auth@v1'
         with:
-          # token_format: 'access_token' use for debugging
+          # token_format: 'access_token' # use for debugging
           workload_identity_provider: 'projects/643420178383/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
           service_account: 'my-service-account@playground-geo.iam.gserviceaccount.com'
           # workload_identity_provider: '${{ secrets.WIF_PROVIDER }}' # e.g. - projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider
@@ -61,7 +61,7 @@ jobs:
       - name: Run Proxy and Flyway Migration
         # run: echo "FLYWAY! might connect"
         run: |
-          /cloud-sql-proxy --address 0.0.0.0 --port 5432 playground-geo:us-central1:crud-fastapi-db &
+          ./cloud-sql-proxy --address 0.0.0.0 --port 5432 playground-geo:us-central1:crud-fastapi-db &
           docker run --rm \
           -v ${{ github.workspace }}/crud-fastapi/migrations:/flyway/sql \
           flyway/flyway:9 \
