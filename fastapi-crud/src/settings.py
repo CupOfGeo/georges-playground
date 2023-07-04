@@ -50,9 +50,9 @@ class Settings(BaseSettings):
     # Variables for the database
     db_host: str = "0.0.0.0"
     db_port: int = 5432
-    db_user: str = "crud_fastapi_app"
+    db_user: str = "crud-fastapi-app"
     db_pass: str = "pass"
-    db_base: str = "crud_fastapi_db"
+    db_base: str = "crud-fastapi-db"
     db_echo: bool = False
 
     @property

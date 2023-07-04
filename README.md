@@ -51,10 +51,11 @@ FASTAPI_CRUD_DISCORD_CLIENT_SECRET
 - `flyway-migration.yaml` - runs flyway migrations located in fastapi-crud/migrations folder to CloudSQL
 
 
-test locally with [act](https://github.com/nektos/act) sort of :shrug:. I haven't gotten it to work with actions that need GCP WIF credentials. but it will work for tests.yaml
+test locally with [act](https://github.com/nektos/act) sort of :shrug:. I haven't gotten it to work with actions that need GCP WIF credentials. but it will work for tests.yaml with the app name secret.
 ```sh
-act -W .github/workflows/tests.yaml -v
+act -W .github/workflows/tests.yaml -v -s APP_NAME=fastapi-crud
 ```
+(if on M1 mac it might tell you to run with `--container-architecture linux/amd64`)
 
 # FastAPI-CRUD
 What I want a dummy app fastapi server thats connected to a cloudSQL database
