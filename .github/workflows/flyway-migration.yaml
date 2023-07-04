@@ -47,21 +47,8 @@ jobs:
       #     service_account_key: ${{ secrets.GCP_CREDENTIALS }}
       #     export_default_credentials: true
 
-      - name: Get Cloud SQL Proxy
-        run: |
-          wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql_proxy
-          chmod +x cloud_sql_proxy
-      - name: Run Cloud SQL Proxy
-        env:
-          TYPEORM_CONNECTION: postgres
-          TYPEORM_HOST: 127.0.0.1
-          TYPEORM_PORT: 5432
-          TYPEORM_USERNAME: user
-          TYPEORM_DATABASE: database_name
-          TYPEORM_PASSWORD: ${{ secrets.FASTAPI_CRUD_DB_PASS }}
-          TYPEORM_MIGRATIONS: ./migration/**/*.ts
-        run: |
-          ./cloud_sql_proxy -instances=playground-geo:us-central1:crud-fastapi-db=tcp:5432
+      - name: Cloud SQL Connect
+        run: gcloud sql connect crud-fastapi-db --user=postgres
 
       - name: Backup staging database
         run: |
