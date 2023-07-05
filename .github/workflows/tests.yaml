@@ -12,7 +12,7 @@ jobs:
         # Only start the service for PRs against the main branch
         # if: github.event.pull_request.base.ref == 'main'
         postgres:
-          image: postgres:16
+          image: postgres:14
           env:
             POSTGRES_USER: fastapi-crud-app
             POSTGRES_PASSWORD: pass
