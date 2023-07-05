@@ -10,14 +10,14 @@ from starlette import status
 
 @pytest.mark.anyio
 async def test_creation(
-    fastapi_app: FastAPI,
-    client: AsyncClient,
+    fastapi_db_app: FastAPI,
+    client_db: AsyncClient,
     dbsession: AsyncSession,
 ) -> None:
     """Tests dummy instance creation."""
-    url = fastapi_app.url_path_for("create_dummy_model")
+    url = fastapi_db_app.url_path_for("create_dummy_model")
     test_name = uuid.uuid4().hex
-    response = await client.put(
+    response = await client_db.put(
         url,
         json={
             "name": test_name,
@@ -31,16 +31,16 @@ async def test_creation(
 
 @pytest.mark.anyio
 async def test_getting(
-    fastapi_app: FastAPI,
-    client: AsyncClient,
+    fastapi_db_app: FastAPI,
+    client_db: AsyncClient,
     dbsession: AsyncSession,
 ) -> None:
     """Tests dummy instance retrieval."""
     dao = DummyDAO(dbsession)
     test_name = uuid.uuid4().hex
     await dao.create_dummy_model(name=test_name)
-    url = fastapi_app.url_path_for("get_dummy_models")
-    response = await client.get(url)
+    url = fastapi_db_app.url_path_for("get_dummy_models")
+    response = await client_db.get(url)
     dummies = response.json()
 
     assert response.status_code == status.HTTP_200_OK
