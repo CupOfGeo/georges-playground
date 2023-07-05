@@ -35,4 +35,4 @@ jobs:
     - name: Run integration tests against dev database.
     #   if: github.event.pull_request.base.ref == 'main'
       working-directory: ./${{secrets.APP_NAME}}
-      run: docker run --network host -e FASTAPI_CRUD_DB_HOST=localhost -e FASTAPI_CRUD_DB_BASE=postgres -e FASTAPI_CRUD_DB_PASSWORD=pass ${{secrets.APP_NAME}}:${{ steps.date.outputs.tag }} pytest -vv src/tests/integration
+      run: docker run --network host -e FASTAPI_CRUD_DB_HOST=localhost -e FASTAPI_CRUD_DB_USER=fastapi-crud-app -e FASTAPI_CRUD_DB_BASE=postgres -e FASTAPI_CRUD_DB_PASSWORD=pass ${{secrets.APP_NAME}}:${{ steps.date.outputs.tag }} pytest -vv src/tests/integration
