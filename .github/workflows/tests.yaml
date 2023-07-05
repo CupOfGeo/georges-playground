@@ -16,7 +16,7 @@ jobs:
           env:
             POSTGRES_USER: fastapi-crud-app
             POSTGRES_PASSWORD: pass
-            POSTGRES_DB: fastapi-crud-db
+            # POSTGRES_DB: fastapi-crud-db
           ports:
             - 5432:5432
 
@@ -35,4 +35,4 @@ jobs:
     - name: Run integration tests against dev database.
     #   if: github.event.pull_request.base.ref == 'main'
       working-directory: ./${{secrets.APP_NAME}}
-      run: docker run --env FASTAPI_CRUD_DB_HOST=postgres ${{secrets.APP_NAME}}:${{ steps.date.outputs.tag }} pytest -vv src/tests/integration
+      run: docker run -e FASTAPI_CRUD_DB_HOST=postgres -e FASTAPI_CRUD_DB_BASE=postgres ${{secrets.APP_NAME}}:${{ steps.date.outputs.tag }} pytest -vv src/tests/integration
