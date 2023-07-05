@@ -35,4 +35,4 @@ jobs:
     - name: Run integration tests against dev database.
     #   if: github.event.pull_request.base.ref == 'main'
       working-directory: ./${{secrets.APP_NAME}}
-      run: docker run --env FASTAPI_CRUD_DB_HOST=127.0.0.1 ${{secrets.APP_NAME}}:${{ steps.date.outputs.tag }} pytest -vv src/tests/integration
+      run: docker run --env FASTAPI_CRUD_DB_HOST=postgres ${{secrets.APP_NAME}}:${{ steps.date.outputs.tag }} pytest -vv src/tests/integration
