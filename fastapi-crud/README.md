@@ -88,7 +88,15 @@ connection arguments
 ```
 
 2)
-```
+```sh
 gcloud sql connect crud-fastapi-db --user=postgres
 ```
 then connect to your instances public ip as the host.
+
+
+add cloud sql to the cloud run instance # TODO terraform this
+https://cloud.google.com/sql/docs/postgres/connect-run#command-line
+```sh
+gcloud run services update hello-cloud-run \
+--add-cloudsql-instances=playground-geo:us-central1:crud-fastapi-db
+```

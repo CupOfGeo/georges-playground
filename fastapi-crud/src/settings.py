@@ -62,14 +62,15 @@ class Settings(BaseSettings):
 
         :return: database URL.
         """
-        return URL.build(
-            scheme="postgresql+asyncpg",
-            host=self.db_host,
-            port=self.db_port,
-            user=self.db_user,
-            password=self.db_pass,
-            path=f"/{self.db_base}",
-        )
+        return URL(f"postgresql+asyncpg://{self.db_user}:{self.db_pass}@/{self.db_base}?host=/cloudsql/playground-geo:us-central1:crud-fastapi-db")  # noqa: E501
+        # return URL.build(
+        #     scheme="postgresql+asyncpg",
+        #     host=self.db_host,
+        #     port=self.db_port,
+        #     user=self.db_user,
+        #     password=self.db_pass,
+        #     path=f"/{self.db_base}",
+        # )
 
     class Config:
         env_file = ".env"
