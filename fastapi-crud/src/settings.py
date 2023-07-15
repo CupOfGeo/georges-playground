@@ -62,7 +62,7 @@ class Settings(BaseSettings):
 
         :return: database URL.
         """
-        return URL(f"postgresql+asyncpg://{self.db_user}:{self.db_pass}@/{self.db_base}?host=/cloudsql/playground-geo:us-central1:crud-fastapi-db")  # noqa: E501
+        return URL(f"postgresql+asyncpg://postgres:{self.db_pass}@/postgres?host=/cloudsql/playground-geo:us-central1:crud-fastapi-db")  # noqa: E501
         # return URL.build(
         #     scheme="postgresql+asyncpg",
         #     host=self.db_host,
