@@ -5,7 +5,7 @@ any and all code goes in the src folder. From there we have api which is the fas
 This is all assuming you are in the crud-fastapi folder.
 
 
-# run Localy
+# run Locally
 ```sh
 # start up the database
 docker run --name postgres-test -e POSTGRES_PASSWORD=pass -e POSTGRES_USER=crud_fastapi_app -e POSTGRES_DB=crud_fastapi_db -p 5432:5432 -d postgres:15.3
@@ -22,6 +22,13 @@ you can also run the app locally with
 ```sh
 python -m src
 ```
+
+# Dev / Staging
+Staging environment will be a tiny CloudSQL Postgres database. Staging really should be a direct copy of prod which it kinda is but just much smaller machine size.
+
+# Prod
+:shrug:
+
 
 # Tests
 For running tests on your local machine.

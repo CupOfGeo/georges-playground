@@ -22,6 +22,13 @@ class LogLevel(str, enum.Enum):  # noqa: WPS600
     FATAL = "FATAL"
 
 
+class Env(str, enum.Enum):
+    """ Possible Deploy Environments."""
+    LOCAL = "LOCAL"
+    DEV = "DEV"  # dev or staging
+    PROD = "PROD"
+
+
 class Settings(BaseSettings):
     """
     Application settings.
@@ -38,7 +45,7 @@ class Settings(BaseSettings):
     reload: bool = False
 
     # Current environment
-    environment: str = "dev"
+    environment: Env = Env.DEV  # local, dev, prod
 
     backend_cors_origins: list = []
 
@@ -62,15 +69,23 @@ class Settings(BaseSettings):
 
         :return: database URL.
         """
+        # local postgres URL schema
+        if self.environment == 'local':
+            return URL.build(
+                scheme="postgresql+asyncpg",
+                host=self.db_host,
+                port=self.db_port,
+                user=self.db_user,
+                password=self.db_pass,
+                path=f"/{self.db_base}",
+            )
 
-        # encoded_password = urllib.parse.quote(self.db_pass)
-        # return URL(f"postgresql+asyncpg://postgres:{}@/postgres?host=/cloudsql/playground-geo:us-central1:crud-fastapi-db")  # noqa: E501
+        # gcp cloud sql has a different connection url schema
         return URL.build(
             scheme="postgresql+asyncpg",
             host=f"{self.db_host}?host=/cloudsql/playground-geo:us-central1:crud-fastapi-db",
             user=self.db_user,
             password=self.db_pass,
-            # path=f"/{self.db_host}?host=/cloudsql/playground-geo:us-central1:crud-fastapi-db",
         )
 
     class Config:
