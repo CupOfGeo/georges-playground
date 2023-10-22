@@ -35,11 +35,12 @@ MarkupSafe==2.1.3
 mccabe==0.7.0
 multidict==6.0.4
 nodeenv==1.7.0
+outcome==1.3.0
 packaging==21.3
 passlib==1.7.4
 platformdirs==2.5.2
 pluggy==1.0.0
-pre-commit==2.20.0
+pre-commit==3.3.3
 py==1.11.0
 pyasn1==0.5.0
 pycodestyle==2.9.1
@@ -56,10 +57,12 @@ PyYAML==6.0
 rsa==4.9
 six==1.16.0
 sniffio==1.3.0
+sortedcontainers==2.4.0
 SQLAlchemy==2.0.17
 starlette==0.27.0
 toml==0.10.2
 tomli==2.0.1
+trio==0.22.2
 typing_extensions==4.6.3
 ujson==5.8.0
 uvicorn==0.22.0

@@ -37,10 +37,6 @@ For running tests on your local machine.
 pytest -vv /tests/unit
 ```
 
-- Run all with *you need to start a database for the integration tests.*
-```sh
-pytest -vv .
-```
 ---
 ### My docker compose is extremely bugged right now might need to try agin after a restart something with .envs caching and the health checks don't work
 
@@ -60,7 +56,7 @@ docker-compose -f docker-compose.yml -f docker-compose.dev.yml --project-directo
 
 
 # Notes
-So I split the tests into integration and unit tests with the respected folders and have just the unit tests run.
+So I only have unit tests now and will only add db integration tests if found that its needed
 
 New test.yaml just builds the dockerfile with --target test so no more having to go into the github action and change python versions and things. It does cd into the fastapi-crud folder.
 

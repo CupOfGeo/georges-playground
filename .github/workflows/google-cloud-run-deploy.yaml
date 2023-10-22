@@ -91,7 +91,7 @@ jobs:
 
       - name: Build and Push Container
         run: |-
-          cd ${{secrets.APP_NAME}}/
+          cd ${{vars.APP_NAME}}/
           docker build --target prod -t "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO }}/${{ env.SERVICE }}:${{ github.sha }}" ./
           docker push "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO }}/${{ env.SERVICE }}:${{ github.sha }}"
 
