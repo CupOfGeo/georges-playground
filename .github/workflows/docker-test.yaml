@@ -4,9 +4,6 @@ on: push
 
 concurrency: tests-${{ github.sha }}
 
-env:
-  APP_NAME: 'playground-geo'
-
 jobs:
   test:
     runs-on: ubuntu-latest

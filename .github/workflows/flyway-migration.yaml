@@ -3,6 +3,10 @@ on:
   push:
     branches:
       - main
+  workflow_run:
+    workflows: "Docker Test"
+    types:
+      - completed
 env:
   PROJECT_ID: 'playground-geo' # TODO: update Google Cloud project id
   REGION: 'us-central1' # TODO: update Cloud Run service region
@@ -11,6 +15,7 @@ env:
 jobs:
   migration:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     permissions:
       contents: 'read'
       id-token: 'write'

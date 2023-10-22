@@ -47,11 +47,10 @@ name: Build and Deploy to Cloud Run
 on:
   push:
     branches: [ main ]
-#  workflow_run:
-#    workflows: ["Run Pre-Commit & Tests"]
-##    branches: [main]
-#    types:
-#      - completed
+  workflow_run:
+    workflows: "Flyway Migration"
+    types:
+      - completed
 
 env:
   PROJECT_ID: 'playground-geo'
@@ -62,7 +61,7 @@ env:
 
 jobs:
   deploy:
-#    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     # Add 'id-token' with the intended permissions for workload identity federation
     permissions:
       contents: 'read'
