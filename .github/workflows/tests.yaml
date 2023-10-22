@@ -1,23 +1,38 @@
 name: Docker Test
 
-on:
-    pull_request:
-      branches: [ main ]
+on: push
 
 concurrency: tests-${{ github.sha }}
 
 jobs:
-
-  build:
-
+  test:
     runs-on: ubuntu-latest
+
+    # services:
+    #     # Only start the service for PRs against the main branch
+    #     # if: github.event.pull_request.base.ref == 'main'
+    #     postgres:
+    #       image: postgres:14
+    #       env:
+    #         POSTGRES_USER: fastapi-crud-app
+    #         POSTGRES_PASSWORD: pass
+    #         POSTGRES_DB: fastapi-crud-db
+    #       ports:
+    #         - 5432:5432
+
+
 
     steps:
     - uses: actions/checkout@v3
-    - name: Build the test Docker image
-      working-directory: ./fastapi-crud
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s) --target test
+    - name: Set build tag
+      id: date
+      run: echo "::set-output name=tag::$(date +%s)"
 
-    - name: Run integration tests against dev database.
-      if: github.ref == 'refs/heads/main'
-      run: docker run my-image-name:$(date +%s)
+    - name: Build the test Docker image
+      working-directory: ./${{secrets.APP_NAME}}
+      run: docker build . --file Dockerfile --tag ${{secrets.APP_NAME}}:${{ steps.date.outputs.tag }} --target test
+
+    # - name: Run integration tests against dev database.
+    # #   if: github.event.pull_request.base.ref == 'main'
+    #   working-directory: ./${{secrets.APP_NAME}}
+    #   run: docker run --rm --network host -e FASTAPI_CRUD_DB_HOST=localhost -e FASTAPI_CRUD_DB_USER=fastapi-crud-app -e FASTAPI_CRUD_DB_BASE=fastapi-crud-db -e FASTAPI_CRUD_DB_PASSWORD=pass ${{secrets.APP_NAME}}:${{ steps.date.outputs.tag }} pytest -vv src/tests/integration

@@ -4,6 +4,9 @@ from fastapi import FastAPI
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 from src.settings import settings
 
+# from src.db.meta import meta
+# from src.db.models import load_all_models
+
 
 def _setup_db(app: FastAPI) -> None:  # pragma: no cover
     """
@@ -15,23 +18,14 @@ def _setup_db(app: FastAPI) -> None:  # pragma: no cover
 
     :param app: fastAPI application.
     """
+    print(settings.db_url)
     engine = create_async_engine(str(settings.db_url), echo=settings.db_echo)
     session_factory = async_sessionmaker(
         engine,
         expire_on_commit=False,
     )
-    print(settings.db_url, settings.db_base)
     app.state.db_engine = engine
     app.state.db_session_factory = session_factory
-
-
-# async def _create_tables() -> None:  # pragma: no cover
-#     """Populates tables in the database."""
-#     load_all_models()
-#     engine = create_async_engine(str(settings.db_url))
-#     async with engine.begin() as connection:
-#         await connection.run_sync(meta.create_all)
-#     await engine.dispose()
 
 
 def register_startup_event(

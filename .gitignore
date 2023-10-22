@@ -1,6 +1,7 @@
 .idea
 .vscode
 .terraform*
+.secrets
 terraform_stuff/terraform.*
 secret
 

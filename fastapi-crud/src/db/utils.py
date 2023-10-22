@@ -10,12 +10,12 @@ async def create_database() -> None:
     engine = create_async_engine(db_url, isolation_level="AUTOCOMMIT")
 
     async with engine.connect() as conn:
-        database_existance = await conn.execute(
+        database_existence = await conn.execute(
             text(
                 f"SELECT 1 FROM pg_database WHERE datname='{settings.db_base}'",  # noqa: E501, S608
             ),
         )
-        database_exists = database_existance.scalar() == 1
+        database_exists = database_existence.scalar() == 1
 
     if database_exists:
         await drop_database()

@@ -10,6 +10,7 @@ from sqlalchemy.ext.asyncio import (
     create_async_engine,
 )
 from src.api.application import get_app
+from src.db.dependencies import get_db_session
 from src.db.utils import create_database, drop_database
 from src.settings import settings
 
@@ -94,6 +95,20 @@ def fastapi_app(
 
 
 @pytest.fixture
+def fastapi_db_app(
+    dbsession: AsyncSession,
+) -> FastAPI:
+    """
+    Fixture for creating FastAPI app.
+
+    :return: fastapi app with mocked dependencies.
+    """
+    application = get_app()
+    application.dependency_overrides[get_db_session] = lambda: dbsession
+    return application  # noqa: WPS331
+
+
+@pytest.fixture
 async def client(
     fastapi_app: FastAPI,
     anyio_backend: Any,
@@ -105,4 +120,19 @@ async def client(
     :yield: client for the app.
     """
     async with AsyncClient(app=fastapi_app, base_url="http://test") as ac:
+        yield ac
+
+
+@pytest.fixture
+async def client_db(
+    fastapi_db_app: FastAPI,
+    anyio_backend: Any,
+) -> AsyncGenerator[AsyncClient, None]:
+    """
+    Fixture that creates client for requesting server.
+
+    :param fastapi_app: the application.
+    :yield: client for the app.
+    """
+    async with AsyncClient(app=fastapi_db_app, base_url="http://test") as ac:
         yield ac
