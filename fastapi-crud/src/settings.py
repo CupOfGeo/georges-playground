@@ -70,7 +70,7 @@ class Settings(BaseSettings):
         :return: database URL.
         """
         # local postgres URL schema
-        if self.environment == 'local':
+        if self.environment == 'LOCAL':
             return URL.build(
                 scheme="postgresql+asyncpg",
                 host=self.db_host,
