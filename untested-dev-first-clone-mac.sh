@@ -71,8 +71,8 @@ brew install flyway
 
 # ngrok just a great dev tool <3 https://ngrok.com/
 brew install ngrok
-# test github actions locally
-brew install act
+# test github actions locally not sure this is too helpful for anything that needs gcp certs
+# brew install act
 # helm for kubernetes template https://helm.sh/
 brew install helm
 # terraform https://developer.hashicorp.com/terraform

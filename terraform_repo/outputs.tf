@@ -3,5 +3,5 @@ output "gcp_bucket" {
 }
 
 output "module-cloud-run-url" {
-  value = module.webserver.cloud_run_url
+  value = module.fastapi-crud.cloud_run_url
 }

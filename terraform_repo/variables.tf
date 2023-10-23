@@ -13,15 +13,15 @@ variable "gcp_auth_file" {
   type        = string
   description = "GCP authentication file"
 }
-variable "tf-bucket-name" {
+variable "tf_bucket_name" {
   type        = string
   description = "The name of the Google Storage Bucket to create"
 }
-variable "storage-class" {
+variable "storage_class" {
   type        = string
   description = "The storage class of the Storage Bucket to create"
 }
-variable "web-image" {
+variable "web_image" {
   type        = string
   description = "image in GAR"
 }

@@ -1,11 +1,11 @@
 I want to play with some terraform
-Following this [getting started with gcp](https://registry.terraform.io/providers/hashicorp/google/latest/docs/guides/getting_startedz)
+Following this [getting started with gcp](https://registry.terraform.io/providers/hashicorp/google/latest/docs/guides/getting_started)
 
 [gcp docs](https://cloud.google.com/docs/terraform/get-started-with-terraform)
 - Create new gcp project : playground-geo
 - Enable API's (compute engine, container registry, storage, ... )
 - I made a Terraform service account and gave it basic editor role (not the least permissions' principle, but I'm trying)
-- `terraform apply` to creat the tf-bucket that's in backend.tf
+- `terraform apply` to create the tf-bucket that's in backend.tf
 - Then I just added this to the top of the file and did `terraform init`.
 ```
 terraform {

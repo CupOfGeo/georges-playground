@@ -36,13 +36,13 @@
 #}
 
 
-resource "google_cloud_run_service" "hello-web-server" {
-  name     = "my-flask-app"
-  location = "us-central1"
+resource "google_cloud_run_service" "cloud_run_service" {
+  name     = "${var.app_name}-service"
+  location = var.gcp_region
   template {
     spec {
       containers {
-        image = var.web-image
+        image = var.web_image
         ports {
           container_port = 8080
         }
