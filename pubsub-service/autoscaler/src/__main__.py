@@ -29,6 +29,9 @@ def turn_on_vm():
         response = request.execute()
         print(f"Starting VM {vm_name}...")
         return 1
+    elif status in ["RUNNING", "REPAIRING"]:
+        print(f"VM {vm_name} is already running")
+        return 1
     else:
         print(f"Failed to start VM {vm_name}: {response['status']}")
         return 0
@@ -46,6 +49,9 @@ def turn_off_vm():
         request = compute.instances().stop(project=project_id, zone=zone, instance=vm_name)
         response = request.execute()
         print(f"Stopping VM {vm_name}...")
+        return 1
+    elif status in ["STOPPING", "TERMINATED"]:
+        print(f"VM {vm_name} is already stopped")
         return 1
     else:
         print(f"Failed to stop VM {vm_name}: {response['status']}")
@@ -79,10 +85,10 @@ def main() -> None:
     num_messages = monitor_message_count()
     status = get_vm_status()
     print(status)
-    if num_messages > 0 and status == "TERMINATED":
-        turn_on_vm()
-    elif num_messages == 0 and status == "RUNNING":
-        turn_off_vm()
+    if num_messages > 0:
+        turn_on_till_success()
+    elif num_messages == 0:
+        turn_off_till_success()
 
 
 if __name__ == "__main__":
