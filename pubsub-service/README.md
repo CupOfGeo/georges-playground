@@ -11,6 +11,8 @@ Bucket `images-bucket`
 
 CloudFunction `autoscaler-cloud-function`
 - checks how many messages are in the pubsub queue every 10 mins and if there are zero messages auto scale vectorizer off if there are messages make sure vectorizer is on
+- update cloud functions are uploaded as zip files a little strange but not too bad or it would be
+a cloud run and upload container
 
 VM `vectorizer`
 - large VM that has a gpu to run large deep learning models. Turns image into an embedding and sends result down a pubsub queue

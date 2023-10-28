@@ -69,10 +69,8 @@ def monitor_message_count():
     client = monitoring_v3.MetricServiceClient()
     result = query.Query(client, project, 'pubsub.googleapis.com/subscription/num_undelivered_messages',
                          end_time=datetime.datetime.now(), minutes=1).select_resources(subscription_id=sub_name)
-    if len(result) == 1:
-        return result[0].points[0].value.int64_value
-    else:
-        raise Exception('Unexpected number of results')
+    for content in result:
+        return content.points[0].value.int64_value
 
 
 # Triggered by a Pub/Sub message, but we won't use the event data.
