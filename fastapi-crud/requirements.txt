@@ -66,6 +66,6 @@ trio==0.22.2
 typing_extensions==4.6.3
 ujson==5.8.0
 uvicorn==0.22.0
-virtualenv==20.16.3
+virtualenv==20.24.6
 Werkzeug==2.3.6
 yarl==1.9.2
